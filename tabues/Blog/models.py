@@ -1,0 +1,55 @@
+from django.db import models
+from recursos_educativos.models import Thematic
+from user.models import User
+from sorl.thumbnail import ImageField
+from django.template.defaultfilters import slugify
+from taggit_autosuggest.managers import TaggableManager
+from ckeditor_uploader.fields import RichTextUploadingField
+
+# Create your models here.
+class Blog(models.Model):
+	name = models.CharField('Nombre', max_length=250,unique=True)
+	photo = ImageField('Imagen', upload_to='blogs/')
+	created_on = models.DateField(auto_now_add=True)
+	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING)
+	content = RichTextUploadingField('contenido')
+	tags = TaggableManager('Tags',help_text='Separe con "," cada elemento')
+	author = models.ForeignKey(User, on_delete = models.DO_NOTHING)
+	slug = models.SlugField(editable=False)
+
+	class Meta:
+		ordering = ['-created_on']		
+
+	def __str__(self):
+		return self.name
+
+	def save(*args,**kwargs):
+		self.slug = slugify(self.name)
+		return super(Blog,self).save(*args,**kwargs)
+
+class Comment(models.Model):
+	blog = models.ForeignKey(Blog,on_delete=models.CASCADE, verbose_name='Blog')
+	content = RichTextUploadingField()
+	created_on = models.DateTimeField(auto_now_add=True)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+	class Meta:
+		verbose_name='Comentario'
+		verbose_name_plural='Comentarios'
+
+
+class Answer(models.Model):
+	comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
+	content = RichTextUploadingField()
+	created_on = models.DateTimeField(auto_now_add=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	class Meta:
+		verbose_name='Respuesta'
+		verbose_name_plural='Respuestas'
+	
+		
+		
+
+
+
