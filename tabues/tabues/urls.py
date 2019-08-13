@@ -23,4 +23,10 @@ from .views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index),
+    path('blogs/',include('Blog.urls')),
+    path('colaboradores/',include('colaborador.urls')),
+    path('recursos-educativos/',include('recursos_educativos.urls')),
+    path('eventos/',include('Eventos.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('taggit_autosuggest/', include('taggit_autosuggest.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

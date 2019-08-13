@@ -11,11 +11,11 @@ class Blog(models.Model):
 	name = models.CharField('Nombre', max_length=250,unique=True)
 	photo = ImageField('Imagen', upload_to='blogs/')
 	created_on = models.DateField(auto_now_add=True)
-	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING)
-	content = RichTextUploadingField('contenido')
-	tags = TaggableManager('Tags',help_text='Separe con "," cada elemento')
-	author = models.ForeignKey(User, on_delete = models.DO_NOTHING)
-	slug = models.SlugField(editable=False)
+	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
+	content = RichTextUploadingField('Contenido')
+	tags = TaggableManager('Tags',help_text='Separe con "," cada elemento',blank=True)
+	author = models.ForeignKey(User, on_delete = models.DO_NOTHING,verbose_name='Autor')
+	slug = models.SlugField(editable=False,max_length=250)
 
 	class Meta:
 		ordering = ['-created_on']		
@@ -23,26 +23,29 @@ class Blog(models.Model):
 	def __str__(self):
 		return self.name
 
-	def save(*args,**kwargs):
+	def save(self,*args,**kwargs):
 		self.slug = slugify(self.name)
 		return super(Blog,self).save(*args,**kwargs)
 
 class Comment(models.Model):
 	blog = models.ForeignKey(Blog,on_delete=models.CASCADE, verbose_name='Blog')
-	content = RichTextUploadingField()
+	content = RichTextUploadingField('Contenido')
 	created_on = models.DateTimeField(auto_now_add=True)
-	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='usuario')
 
 	class Meta:
 		verbose_name='Comentario'
 		verbose_name_plural='Comentarios'
 
+	def __str__(self):
+		return self.blog
+
 
 class Answer(models.Model):
-	comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
-	content = RichTextUploadingField()
+	comment = models.ForeignKey(Comment,on_delete=models.CASCADE,verbose_name='Comentario')
+	content = RichTextUploadingField('Contenido')
 	created_on = models.DateTimeField(auto_now_add=True)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
 
 	class Meta:
 		verbose_name='Respuesta'

@@ -6,7 +6,7 @@ from user.models import User
 
 # Create your models here.
 class Thematic(models.Model):
-	name = models.CharField(max_length=200, unique=True)
+	name = models.CharField('Nombre',max_length=200, unique=True)
 
 	class Meta:
 		verbose_name_plural = 'Temas'
@@ -17,12 +17,12 @@ class Thematic(models.Model):
 
 class Learning(models.Model):
 	tittle = models.CharField('Título', max_length=200)
-	photo = ImageField('Foto',upload_to='aprende/')
+	photo = ImageField('Foto',upload_to='recursos-educativos/aprende')
 	content = RichTextUploadingField(verbose_name='Contenido')
-	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING)
+	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
 	created_on = models.DateField('Fecha de creación', auto_now_add=True)
 	slug = models.SlugField(max_length=200, editable=False)
-	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+	author = models.ForeignKey(User, on_delete=models.DO_NOTHING,verbose_name='Autor')
 
 	class Meta:
 		verbose_name='Aprende'
@@ -37,9 +37,10 @@ class Learning(models.Model):
 	 
 class Educational_Resource(models.Model):
 	tittle = models.CharField('Título',max_length=200)
-	photo = ImageField('Foto',upload_to='recursos-educativos/')
+	photo = ImageField('Foto',upload_to='recursos-educativos/',blank=True)
+	content = RichTextUploadingField(verbose_name='Contenido')
 	slug = models.SlugField(max_length=200, editable=False)
-	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+	author = models.ForeignKey(User, on_delete=models.DO_NOTHING,verbose_name='Autor')
 
 
 	class Meta:
@@ -52,6 +53,18 @@ class Educational_Resource(models.Model):
 	def save(self,*args,**kwargs):
 		self.slug = slugify(self.tittle)
 		return super(Educational_Resource,self).save(*args,*kwargs)
+
+class EduFiles(models.Model):
+	publication = models.ForeignKey(Educational_Resource,on_delete=models.CASCADE,verbose_name='Archivo')
+	nombre = models.CharField(max_length=350)
+	archivo_pdf = models.FileField(upload_to='recursos-educativos/archivos/')
+
+	def __str__(self):
+		return u'%s' % self.publication
+
+	class Meta:
+		verbose_name_plural = 'Archivos'
+		
 	 		 
 
 

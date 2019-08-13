@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load  %}
 {% block content %}
 <div class="content-wrap">
 
@@ -10,7 +10,7 @@
 			<div class="col-lg-4 dark col-padding ohidden" style="background-color: #1abc9c;">
 				<div>
 					<h3 class="uppercase" style="font-weight: 600;">No estas sola/o</h3>
-					<p align="justify" style="line-height: 1.8;">Los derechos sexuales y reproductivos son derechos humanos. La sexualidad no debería ser un tema tabú, es parte inherente de la personalidad.</p>
+					<p align="justify" style="line-height: 1.8;">Los derechos sexuales y reproductivos son derechos humanos. La sexualidad no debería ser un tema tabú.</p>
 					<a href="#" class="button button-border button-light button-rounded button-reveal tright uppercase nomargin"><i class="icon-angle-right"></i><span>Leer mas</span></a>
 					<i class="icon-bulb bgicon"></i>
 				</div>
@@ -27,7 +27,7 @@
 
 			<div class="col-lg-4 dark col-padding ohidden" style="background-color: #e74c3c;">
 				<div>
-					<h3 class="uppercase" style="font-weight: 600;">Que consigues?</h3>
+					<h3 class="uppercase" style="font-weight: 600;">Visión</h3>
 					<p style="line-height: 1.8;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 					<a href="#" class="button button-border button-light button-rounded button-reveal tright uppercase nomargin"><i class="icon-angle-right"></i><span>Leer mas</span></a>
 					<i class="icon-bulb bgicon"></i>
@@ -44,72 +44,32 @@
 
 		<div id="posts" class="small-thumbs alt">
 
+			{% for blog in highlight_blogs %}
+
 			<div class="entry clearfix">
 				<div class="entry-image">
-					<a href="images/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="images/blog/small/17.jpg" alt="Standard Post with Image"></a>
+					<a href="/static/img/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="/static/img/blog/small/17.jpg" alt="Standard Post with Image"></a>
 				</div>
 				<div class="entry-c">
 					<div class="entry-title">
-						<h2><a href="blog-single.html">Standard post</a></h2>
+						<h2><a href="blog-single.html">{{blog}}</a></h2>
 					</div>
 					<ul class="entry-meta clearfix">
-						<li><i class="icon-calendar3"></i> 10th February 2014</li>
-						<li><a href="#"><i class="icon-user"></i> admin</a></li>
-						<li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li>
+						<li><i class="icon-calendar3"></i> {{blog.created_on}}</li>
+						<li><a href="#"><i class="icon-user"></i> {{blog.author}}</a></li>
+						<li>
+							<i class="icon-folder-open"></i> <a href="#">{{blog.thematic}}</a>
+						</li>
 						<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
-						<li><a href="#"><i class="icon-camera-retro"></i></a></li>
 					</ul>
 					<div class="entry-content">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere.</p>
-						<a href="blog-single.html"class="more-link">Read More</a>
+						<p align="justify">{{blog.content|safe|striptags|truncatechars:300}}</p>
+						<a href=""class="more-link">Leer más</a>
 					</div>
 				</div>
 			</div>
+			{% endfor %}
 
-			<div class="entry clearfix">
-				<div class="entry-image">
-					<a href="images/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="images/blog/small/17.jpg" alt="Standard Post with Image"></a>
-				</div>
-				<div class="entry-c">
-					<div class="entry-title">
-						<h2><a href="blog-single.html">Standard post</a></h2>
-					</div>
-					<ul class="entry-meta clearfix">
-						<li><i class="icon-calendar3"></i> 10th February 2014</li>
-						<li><a href="#"><i class="icon-user"></i> admin</a></li>
-						<li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li>
-						<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
-						<li><a href="#"><i class="icon-camera-retro"></i></a></li>
-					</ul>
-					<div class="entry-content">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere.</p>
-						<a href="blog-single.html"class="more-link">Read More</a>
-					</div>
-				</div>
-			</div>
-
-
-
-
-			<div class="entry clearfix">
-				<div class="entry-image">
-					<a href="images/blog/full/17.jpg" data-lightbox="../image"><img class="image_fade" src="images/blog/standard/10.jpg" alt="Standard Post with Image"></a>
-				</div>
-				<div class="entry-title">
-					<h2><a href="blog-single.html">Post con imagen</a></h2>
-				</div>
-				<ul class="entry-meta clearfix">
-					<li><i class="icon-calendar3"></i> 10 Febrero 2019</li>
-					<li><a href="#"><i class="icon-user"></i> admin</a></li>
-					<li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li>
-					<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13 Comentarios</a></li>
-					<li><a href="#"><i class="icon-camera-retro"></i></a></li>
-				</ul>
-				<div class="entry-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus voluptate id aperiam ea ipsum magni aut perspiciatis rem voluptatibus officia eos rerum deleniti quae nihil facilis repellat atque vitae voluptatem libero at eveniet veritatis ab facere.</p>
-					<a href="blog-single.html"class="more-link">Leer mas</a>
-				</div>
-			</div>
 		</div>
 
 
@@ -123,27 +83,31 @@
 
 			<div id="posts" class="events small-thumbs">
 
+				{% for event in next_events %}
+
 				<div class="entry clearfix">
 					<div class="entry-image d-md-none d-lg-block">
 						<a href="#">
-							<img src="images/thumbs/1.jpg" alt="Inventore voluptates velit totam ipsa tenetur">
+							<img src="/static/img/thumbs/1.jpg" alt="Inventore voluptates velit totam ipsa tenetur">
 							<div class="entry-date">10<span>Apr</span></div>
 						</a>
 					</div>
 					<div class="entry-c">
 						<div class="entry-title">
-							<h2><a href="#">Inventore voluptates velit totam ipsa tenetur</a></h2>
+							<h2><a href="#">{{event}}</a></h2>
 						</div>
 						<ul class="entry-meta clearfix">
-							<li><span class="badge badge-warning">Private</span></li>
-							<li><a href="#"><i class="icon-time"></i> 11:00 - 19:00</a></li>
-							<li><a href="#"><i class="icon-map-marker2"></i> Melbourne</a></li>
+							<li><span class="badge badge-warning">{{event.author}}</span></li>
+							<li><a href="#"><i class="icon-time"></i> {{event.init_hour}} - {{event.end_hour}}</a></li>
+							<li><a href="#"><i class="icon-map-marker2"></i> {{event.reference_point}}</a></li>
 						</ul>
 						<div class="entry-content">
-							<a href="#" class="btn btn-danger">Leer mas</a>
+							<a href="#" class="btn btn-danger">Ver más</a>
 						</div>
 					</div>
 				</div>
+
+				{% endfor %}
 
 
 			</div>
@@ -162,7 +126,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="images/portfolio/4/1.jpg" alt="Open Imagination">
+							<img src="/static/img/portfolio/4/1.jpg" alt="Open Imagination">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="images/portfolio/full/1.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
@@ -180,7 +144,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="images/portfolio/4/2.jpg" alt="Locked Steel Gate">
+							<img src="/static/img/portfolio/4/2.jpg" alt="Locked Steel Gate">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="images/portfolio/full/2.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
@@ -198,7 +162,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="#">
-							<img src="images/portfolio/4/3.jpg" alt="Mac Sunglasses">
+							<img src="/static/img/portfolio/4/3.jpg" alt="Mac Sunglasses">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="http://vimeo.com/89396394" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
@@ -216,10 +180,10 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="images/portfolio/4/5.jpg" alt="Console Activity">
+							<img src="/static/img/portfolio/4/5.jpg" alt="Console Activity">
 						</a>
 						<div class="portfolio-overlay">
-							<a href="images/portfolio/full/5.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+							<a href="/static/img/portfolio/full/5.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
 							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
 						</div>
 					</div>
@@ -234,7 +198,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single-video.html">
-							<img src="images/portfolio/4/7.jpg" alt="Backpack Contents">
+							<img src="/static/img/portfolio/4/7.jpg" alt="Backpack Contents">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="http://www.youtube.com/watch?v=kuceVNBTJio" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
@@ -252,10 +216,10 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="images/portfolio/4/8.jpg" alt="Sunset Bulb Glow">
+							<img src="/static/img/portfolio/4/8.jpg" alt="Sunset Bulb Glow">
 						</a>
 						<div class="portfolio-overlay">
-							<a href="images/portfolio/full/8.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+							<a href="/static/img/portfolio/full/8.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
 							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
 						</div>
 					</div>
@@ -270,7 +234,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single-video.html">
-							<img src="images/portfolio/4/10.jpg" alt="Study Table">
+							<img src="/static/img/portfolio/4/10.jpg" alt="Study Table">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="http://vimeo.com/91973305" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
@@ -288,7 +252,7 @@
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="images/portfolio/4/11.jpg" alt="Workspace Stuff">
+							<img src="/static/img/portfolio/4/11.jpg" alt="Workspace Stuff">
 						</a>
 						<div class="portfolio-overlay">
 							<a href="images/portfolio/full/11.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
