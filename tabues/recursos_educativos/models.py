@@ -38,6 +38,7 @@ class Learning(models.Model):
 class Educational_Resource(models.Model):
 	tittle = models.CharField('Título',max_length=200)
 	photo = ImageField('Foto',upload_to='recursos-educativos/',blank=True)
+	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
 	content = RichTextUploadingField(verbose_name='Contenido')
 	slug = models.SlugField(max_length=200, editable=False)
 	author = models.ForeignKey(User, on_delete=models.DO_NOTHING,verbose_name='Autor')

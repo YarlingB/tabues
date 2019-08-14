@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+
+<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+	<div class="container clearfix">
+		<h1>Test</h1>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="#">Inicio</a></li>
+			<li class="breadcrumb-item active bdcrumlg" aria-current="page">Test</li>
+		</ol>
+	</div>
+
+</section>
+
+<section id="content">
+
+	<div class="content-wrap">
+
+		<div class="container clearfix">
+
+			<!-- Post Content -->
+			<div class="postcontent nobottommargin clearfix">
+
+				<!-- Posts -->
+				<div id="posts" class="small-thumbs">
+					
+					{% for blog in blogs_list %}
+					
+					<div class="entry clearfix customcards">
+						<div class="entry-image">
+							<a href="{{blog.photo.url}}" data-lightbox="image">
+								{% thumbnail blog.photo "300x225" crop="center" as im %}
+								<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+								{% empty %}
+								<img src="http://via.placeholder.com/300x225" alt="">
+								{% endthumbnail %}
+							</a>
+						</div>
+						<div class="entry-c">
+							<div class="entry-title">
+								<h2><a href="{% url 'blog_detail' blog.slug %}">{{blog|striptags|truncatechars:60}}</a></h2>
+							</div>
+							<ul class="entry-meta clearfix sg_detail">
+								<li><i class="icon-calendar3"></i> {{blog.created_on}}</li>
+								<li><a href="#"><i class="icon-user"></i> {{blog.author}}</a></li>
+								<li><i class="icon-folder-open"></i> <a href="#">{{blog.thematic}}</a></li>
+								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+								
+							</ul>
+							<div class="entry-content">
+								<p>{{blog.content|safe|striptags|truncatechars:130}}</p>
+								<a href="{% url 'blog_detail' blog.slug%}"class="more-link">Leer más</a>
+							</div>
+						</div>
+					</div>
+
+					{% endfor %}
+
+				</div>
+					<!-- #posts end -->
+
+					<!-- Pagination -->
+
+					<ul class="pagination pagination-circle pagination-lg justify-content-center top_padding_30">
+						<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">«</span></a></li>
+						<li class="page-item active"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#">4</a></li>
+						<li class="page-item"><a class="page-link" href="#">5</a></li>
+						<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+					</ul>
+
+
+				</div><!-- .postcontent end -->
+
+				<!-- Sidebar -->
+				<div class="sidebar nobottommargin col_last">
+					<div class="sidebar-widgets-wrap">
+
+						<div class="widget clearfix">
+							<div class="input-group mx-auto" style="">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<i class="icon-search2" style="color:#1ABC9C"></i>
+									</span>
+								</div>
+								<input type="text" id="icons-filter" class="form-control" value="" placeholder="Buscar" style="background-color: #f1f7ff;">
+							</div>
+
+						</div>
+
+
+
+						<div class="widget clearfix">
+
+							<h4>Blogs Recientes</h4>
+							<div id="post-list-footer">
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/magazine/small/1.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/magazine/small/2.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/magazine/small/3.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+							<h4 class="highlight-me">Tags</h4>
+							<div class="tagcloud">
+								<a href="#">general</a>
+								<a href="#">videos</a>
+								<a href="#">salud</a>
+								<a href="#">sexualidad</a>
+								<a href="#">Embarazo adolescente</a>
+								<a href="#">ITS</a>
+								<a href="#">Anticonceptivos</a>
+								<a href="#">Mitos</a>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div><!-- .sidebar end -->
+
+			</div>
+
+				</div>
+
+			</section>		
+
+{% endblock content %}

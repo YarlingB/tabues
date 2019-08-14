@@ -25,7 +25,7 @@ class Blog(models.Model):
 
 	def save(self,*args,**kwargs):
 		self.slug = slugify(self.name)
-		return super(Blog,self).save(*args,**kwargs)
+		return super(Blog,self).save(*args,*kwargs)
 
 class Comment(models.Model):
 	blog = models.ForeignKey(Blog,on_delete=models.CASCADE, verbose_name='Blog')

@@ -16,6 +16,8 @@
 	<link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css" />
 
 	<link rel="stylesheet" href="/static/css/responsive.css" type="text/css" />
+	<link rel="stylesheet" href="/static/css/customstyle.css" type="text/css" />
+
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<title>Tabues</title>
@@ -36,8 +38,7 @@
 
 						<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
 
-					<!-- Logo
-						============================================= -->
+					<!-- Logo -->
 						<div id="logo">
 							<a href="index.html" class="standard-logo" data-dark-logo="/static/img/Logo.png"><img src="/static/img/Logo.png" alt="Canvas Logo"></a>
 							<a href="index.html" class="retina-logo" data-dark-logo="/static/img/Logo.png"><img src="/static/img/Logo.png" alt="Canvas Logo"></a>
@@ -48,26 +49,31 @@
 
 							<ul>
 								<li>
-									<a href="index.html">
+									<a href="/">
 										<div>Inicio</div>
 									</a>
 								</li>
 
-								<li class="current"><a href="#"><div>Recursos Educativos</div></a>
+								<li class="current"><a href="/recursos-educativos"><div>Recursos Educativos</div></a>
 									<ul>
-										<li><a href="#"><div><i class="icon-stack"></i>Sliders</div></a>
-											<ul>
-												<li><a href="slider-revolution.html"><div>Revolution Slider</div></a>
-													<ul>
-														<li><a href="rs-demos.html"><div>Premium Templates</div></a></li>
-													</ul>
-												</li>
-											</ul>
+										<li>
+											<a href="#">
+												<div>
+													<i class="icon-stack"></i>Aprende</div>
+											</a>
+											
+										</li>
+										<li>
+											<a href="">
+												<div>
+													<i class="icon-stack"></i>Info
+												</div>
+											</a>
 										</li>
 									</ul>
 								</li>
 
-								<li class="mega-menu"><a href="#"><div>Test</div></a>
+								<!--<li class="mega-menu"><a href="#"><div>Test</div></a>
 									<div class="mega-menu-content style-2 clearfix">
 										<ul class="mega-menu-column col-lg-3">
 											<li class="mega-menu-title"><a href="#"><div>Introduction</div></a>
@@ -77,66 +83,28 @@
 											</li>
 										</ul>
 									</div>
+								</li>-->
+
+								<li>
+									<a href="/blogs">
+										<div>Blogs</div>
+									</a>
 								</li>
 
-								<li class="mega-menu"><a href="#"><div>Blogs</div></a>
-									<div class="mega-menu-content style-2 clearfix">
-										<ul class="mega-menu-column col-5">
-											<li class="mega-menu-title"><a href="#"><div>Grids</div></a>
-												<ul>
-													<li><a href="portfolio-1.html"><div>1 Column</div></a></li>
-												</ul>
-											</li>
-										</ul>
-										<ul class="mega-menu-column col-5">
-											<li class="mega-menu-title"><a href="#"><div>Masonry</div></a>
-												<ul>
-													<li><a href="portfolio-mixed-masonry.html"><div>Mixed Columns</div></a></li>
-												</ul>
-											</li>
-										</ul>
-										<ul class="mega-menu-column col-5">
-											<li class="mega-menu-title"><a href="#"><div>Loading Styles</div></a>
-												<ul>
-													<li><a href="portfolio.html"><div>jQuery Filter</div></a></li>
-												</ul>
-											</li>
-										</ul>
-										<ul class="mega-menu-column col-5">
-											<li class="mega-menu-title"><a href="#"><div>Single Project</div></a>
-
-											</li>
-										</ul>
-										<ul class="mega-menu-column col-5">
-											<li class="mega-menu-title"><a href="#"><div>Layouts</div></a>
-											</li>
-										</ul>
-									</div>
+								<li>
+									<a href="/eventos">
+										<div>Eventos</div>
+									</a>
+									
 								</li>
 
-								<li class="mega-menu"><a href="#"><div>Eventos</div></a>
-									<div class="mega-menu-content style-2 clearfix">
-
-										<ul class="mega-menu-column col-lg-3">
-											<li class="mega-menu-title"><a href="#"><div>Comments Module</div></a>
-												<ul>
-													<li><a href="#"><div>Facebook Comments</div></a></li>
-												</ul>
-											</li>
-										</ul>
-									</div>
-								</li>
-
-								<li><a href="shop.html"><div>Directorio</div></a>
-									<ul>
-										<li><a href="shop.html"><div>4 Columns</div></a></li>
-									</ul>
+								<li><a href="/directorio"><div>Directorio</div></a>
 								</li>
 							</ul>
 
 						
 							<div id="top-cart">
-								<a href="#" id="top-cart-trigger"><i class="icon-shopping-cart"></i>
+								<a href="#" id="top-cart-trigger"><i class="icon-line-cross"></i>
 								</a>
 								<div class="top-cart-content">
 									<div class="top-cart-title">
@@ -187,47 +155,11 @@
 			</header>
 
 
-			<section id="slider" class="slider-element slider-parallax swiper_wrapper full-screen clearfix">
-
-				<div class="slider-parallax-inner">
-
-					<div class="swiper-container swiper-parent">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide dark" style="background-image: url('/static/img/slider/1.jpg');">
-								<div class="container clearfix">
-									<div class="slider-caption slider-caption-center">
-										<h2 data-animate="fadeInUp">Más educación, más derechos</h2>
-										<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">Loren ipsum</p>
-										<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="btn btn-danger nomargin" value="submit">Contáctanos</button>
-									</div>
-								</div>
-							</div>
-
-						</div>
-						<div class="slider-arrow-left">
-							<i class="icon-angle-left"></i>
-						</div>
-						<div class="slider-arrow-right">
-							<i class="icon-angle-right"></i>
-						</div>
-						<div class="slide-number">
-							<div class="slide-number-current">
-							</div>
-							<span>/</span>
-							<div class="slide-number-total"></div>
-						</div>
-					</div>
-
-				</div>
-
-			</section>
-
 		<!-- Content -->
-			<section id="content">
+			
 
 				{% block content %}{% endblock content %}
 
-			</section>
 
 			<footer id="footer" class="dark">
 

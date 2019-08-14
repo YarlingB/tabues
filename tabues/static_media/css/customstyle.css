@@ -1,0 +1,11 @@
+.customcards{
+	background-color: white;
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sg_detail{
+    background: linear-gradient(45deg, #d6d2ef, #927b7b00);
+    border-radius: 5px;
+}

@@ -1,6 +1,44 @@
 {% extends "base.html" %}
-{% load  %}
+{% load thumbnail %}
+
 {% block content %}
+
+<section id="slider" class="slider-element slider-parallax swiper_wrapper full-screen clearfix">
+
+	<div class="slider-parallax-inner">
+
+		<div class="swiper-container swiper-parent">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide dark" style="background-image: url('/static/img/slider/1.jpg');">
+					<div class="container clearfix">
+						<div class="slider-caption slider-caption-center">
+							<h2 data-animate="fadeInUp">Más educación, más derechos</h2>
+							<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">Loren ipsum</p>
+							<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="btn btn-danger nomargin" value="submit">Contáctanos</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="slider-arrow-left">
+				<i class="icon-angle-left"></i>
+			</div>
+			<div class="slider-arrow-right">
+				<i class="icon-angle-right"></i>
+			</div>
+			<div class="slide-number">
+				<div class="slide-number-current">
+				</div>
+				<span>/</span>
+				<div class="slide-number-total"></div>
+			</div>
+		</div>
+
+	</div>
+
+</section>
+
+<section id="content">
 <div class="content-wrap">
 
 	<div class="container clearfix">
@@ -46,13 +84,19 @@
 
 			{% for blog in highlight_blogs %}
 
-			<div class="entry clearfix">
+			<div class="entry clearfix customcards">
 				<div class="entry-image">
-					<a href="/static/img/blog/full/17.jpg" data-lightbox="image"><img class="image_fade" src="/static/img/blog/small/17.jpg" alt="Standard Post with Image"></a>
+					<a href="{{blog.photo.url}}" data-lightbox="image">
+					{% thumbnail blog.photo "300x225" crop="center" as im %}
+						<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+						{% empty %}
+						<img src="http://via.placeholder.com/300x225" alt="">
+					{% endthumbnail %}
+						</a>
 				</div>
 				<div class="entry-c">
 					<div class="entry-title">
-						<h2><a href="blog-single.html">{{blog}}</a></h2>
+						<h2><a href="{% url 'blog_detail' blog.slug %}">{{blog}}</a></h2>
 					</div>
 					<ul class="entry-meta clearfix">
 						<li><i class="icon-calendar3"></i> {{blog.created_on}}</li>
@@ -60,11 +104,11 @@
 						<li>
 							<i class="icon-folder-open"></i> <a href="#">{{blog.thematic}}</a>
 						</li>
-						<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+						<li><a href=""><i class="icon-comments"></i> 13</a></li>
 					</ul>
 					<div class="entry-content">
 						<p align="justify">{{blog.content|safe|striptags|truncatechars:300}}</p>
-						<a href=""class="more-link">Leer más</a>
+						<a href="{% url 'blog_detail' blog.slug %}"class="more-link">Leer más</a>
 					</div>
 				</div>
 			</div>
@@ -78,23 +122,27 @@
 		<div class="col_full bothsidebar nobottommargin">
 
 			<div class="fancy-title title-border">
-				<h3><a href="">Próximos Eventos</a> </h3>
+				<h3><a href="/eventos">Próximos Eventos</a> </h3>
 			</div>
 
 			<div id="posts" class="events small-thumbs">
 
 				{% for event in next_events %}
 
-				<div class="entry clearfix">
+				<div class="entry clearfix ">
 					<div class="entry-image d-md-none d-lg-block">
-						<a href="#">
-							<img src="/static/img/thumbs/1.jpg" alt="Inventore voluptates velit totam ipsa tenetur">
+						<a href="{% url 'event_detail' event.slug %}">
+							{% thumbnail event.photo "200x150" crop="center" as im %}
+								<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+								{% empty %}
+								<img src="http://via.placeholder.com/270x202" alt="">
+							{% endthumbnail %}
 							<div class="entry-date">10<span>Apr</span></div>
 						</a>
 					</div>
 					<div class="entry-c">
 						<div class="entry-title">
-							<h2><a href="#">{{event}}</a></h2>
+							<h2><a href="{% url 'event_detail' event.slug %}">{{event}}</a></h2>
 						</div>
 						<ul class="entry-meta clearfix">
 							<li><span class="badge badge-warning">{{event.author}}</span></li>
@@ -122,149 +170,34 @@
 
 		<div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="true" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
 
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single.html">
-							<img src="/static/img/portfolio/4/1.jpg" alt="Open Imagination">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="images/portfolio/full/1.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single.html">Open Imagination</a></h3>
-						<span><a href="#">Media</a>, <a href="#">Icons</a></span>
-					</div>
-				</div>
-			</div>
+			{% for resource in resources_list %}
 
 			<div class="oc-item">
 				<div class="iportfolio">
 					<div class="portfolio-image">
 						<a href="portfolio-single.html">
-							<img src="/static/img/portfolio/4/2.jpg" alt="Locked Steel Gate">
+							{% thumbnail resource.photo "270x202" crop="center" as im %}
+								<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+								{% empty %}
+								<img src="http://via.placeholder.com/270x202" alt="">
+							{% endthumbnail %}
+							
 						</a>
 						<div class="portfolio-overlay">
-							<a href="images/portfolio/full/2.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+							<a href="{{resource.photo.url}}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+							<a href="{% url 'resource_detail' resource.slug %}" class="right-icon"><i class="icon-line-ellipsis"></i></a>
 						</div>
 					</div>
 					<div class="portfolio-desc">
-						<h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
-						<span><a href="#">Illustrations</a></span>
+						<h3>
+							<a href="{% url 'resource_detail' resource.slug %}">{{resource.tittle}}</a>
+						</h3>
+						<span><a href="#">{{resource.thematic}}</a></span>
 					</div>
 				</div>
 			</div>
 
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="#">
-							<img src="/static/img/portfolio/4/3.jpg" alt="Mac Sunglasses">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="http://vimeo.com/89396394" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-							<a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
-						<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single.html">
-							<img src="/static/img/portfolio/4/5.jpg" alt="Console Activity">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="/static/img/portfolio/full/5.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single.html">Console Activity</a></h3>
-						<span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single-video.html">
-							<img src="/static/img/portfolio/4/7.jpg" alt="Backpack Contents">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="http://www.youtube.com/watch?v=kuceVNBTJio" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-							<a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single-video.html">Backpack Contents</a></h3>
-						<span><a href="#">UI Elements</a>, <a href="#">Icons</a></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single.html">
-							<img src="/static/img/portfolio/4/8.jpg" alt="Sunset Bulb Glow">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="/static/img/portfolio/full/8.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single.html">Sunset Bulb Glow</a></h3>
-						<span><a href="#">Graphics</a></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single-video.html">
-							<img src="/static/img/portfolio/4/10.jpg" alt="Study Table">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="http://vimeo.com/91973305" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-							<a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single-video.html">Study Table</a></h3>
-						<span><a href="#">Graphics</a>, <a href="#">Media</a></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="oc-item">
-				<div class="iportfolio">
-					<div class="portfolio-image">
-						<a href="portfolio-single.html">
-							<img src="/static/img/portfolio/4/11.jpg" alt="Workspace Stuff">
-						</a>
-						<div class="portfolio-overlay">
-							<a href="images/portfolio/full/11.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-							<a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-						</div>
-					</div>
-					<div class="portfolio-desc">
-						<h3><a href="portfolio-single.html">Workspace Stuff</a></h3>
-						<span><a href="#">Media</a>, <a href="#">Icons</a></span>
-					</div>
-				</div>
-			</div>
+			{% endfor %}
 
 		</div>
 
@@ -272,4 +205,5 @@
 	</div>
 
 </div>	
+</section>
 {% endblock content %}
