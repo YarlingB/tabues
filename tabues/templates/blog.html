@@ -47,7 +47,7 @@
 								<li><i class="icon-calendar3"></i> {{blog.created_on}}</li>
 								<li><a href="#"><i class="icon-user"></i> {{blog.author}}</a></li>
 								<li><i class="icon-folder-open"></i> <a href="#">{{blog.thematic}}</a></li>
-								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> 13</a></li>
+								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> {{blog.comm}}</a></li>
 								
 							</ul>
 							<div class="entry-content">
@@ -97,50 +97,30 @@
 
 						<div class="widget clearfix">
 
-							<h4>Blogs Recientes</h4>
+							<h4>Recursos Educativos</h4>
 							<div id="post-list-footer">
-
+								{% for rs in rs_list %}
+									
 								<div class="spost clearfix">
 									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/magazine/small/1.jpg" alt=""></a>
+										<a href="{% url 'resource_detail' rs.slug %}" class="nobg">
+											{% thumbnail rs.photo "48x48" crop="center" as im %}
+											<img src="{{im.url}}" alt="">
+											{% endthumbnail %}
+											
+										</a>
 									</div>
 									<div class="entry-c">
 										<div class="entry-title">
-											<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+											<h4><a href="{% url 'resource_detail' rs.slug %}">{{rs}}</a></h4>
 										</div>
 										<ul class="entry-meta">
-											<li>10th July 2014</li>
+											<li>{{rs.created_on}}</li>
 										</ul>
 									</div>
 								</div>
+								{% endfor %}
 
-								<div class="spost clearfix">
-									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/magazine/small/2.jpg" alt=""></a>
-									</div>
-									<div class="entry-c">
-										<div class="entry-title">
-											<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
-										</div>
-										<ul class="entry-meta">
-											<li>10th July 2014</li>
-										</ul>
-									</div>
-								</div>
-
-								<div class="spost clearfix">
-									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/magazine/small/3.jpg" alt=""></a>
-									</div>
-									<div class="entry-c">
-										<div class="entry-title">
-											<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
-										</div>
-										<ul class="entry-meta">
-											<li>10th July 2014</li>
-										</ul>
-									</div>
-								</div>
 
 							</div>
 

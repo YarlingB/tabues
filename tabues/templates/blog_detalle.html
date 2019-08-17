@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% block content %}
 	
 <section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
@@ -17,115 +17,162 @@
 
 <section id="content">
 
-			<div class="content-wrap">
+	<div class="content-wrap">
 
-				<div class="container clearfix">
+		<div class="container clearfix">
 
-					<!-- Post Content -->
-					<div class="postcontent nobottommargin clearfix">
+			<!-- Post Content -->
+			<div class="postcontent nobottommargin clearfix">
 
-						<div class="single-post nobottommargin">
+				<div class="single-post nobottommargin">
 
-							<!-- Single Post -->
-							<div class="entry clearfix">
+					<!-- Single Post -->
+					<div class="entry clearfix">
 
-								<!-- Entry Title -->
-								<div class="entry-title">
-									<h2>{{object}}</h2>
-								</div><!-- .entry-title end -->
+						<!-- Entry Title -->
+						<div class="entry-title">
+							<h2>{{object}}</h2>
+						</div><!-- .entry-title end -->
 
-								<!-- Entry Meta -->
-								<ul class="entry-meta clearfix">
-									<li><i class="icon-calendar3"></i> {{object.created_on}}</li>
-									<li><a href="#"><i class="icon-user"></i> {{object.author}}</a></li>
-									<li><i class="icon-folder-open"></i> <a href="#">General</a>, <a href="#">Media</a></li>
-									<li><a href="#"><i class="icon-comments"></i> 23 Comentarios</a></li>
-									<li><a href="#"><i class="icon-camera-retro"></i></a></li>
-								</ul><!-- .entry-meta end -->
+						<!-- Entry Meta -->
+						<ul class="entry-meta clearfix">
+							<li>
+								<i class="icon-calendar3"></i> {{object.created_on}}
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-user"></i> {{object.author}}
+								</a>
+							</li>
+							<li>
+								<i class="icon-folder-open"></i> 
+								<a href="#">{{object.thematic}}</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-comments"></i> 23 Comentarios
+								</a>
+							</li>
+						</ul><!-- .entry-meta end -->
 
-								<!-- Entry Image
-								============================================= -->
-								<div class="entry-image">
-									<a href="#"><img src="images/blog/standard/1.jpg" alt="Blog Single"></a>
-								</div><!-- .entry-image end -->
+						<!-- Entry Image -->
+						<div class="entry-image">
+							<a>
+								
+								{% thumbnail object.photo "844x392" as im %}
+								<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+								{% empty %}
+								<img src="http://via.placeholder.com/844x392" alt="">
+								{% endthumbnail %}
+								
+							</a>
+						</div><!-- .entry-image end -->
 
-								<!-- Entry Content
-								============================================= -->
-								<div class="entry-content notopmargin">
+						<!-- Entry Content -->
+						<div class="entry-content notopmargin">
 
-									<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+							<p>{{object.content|safe}}</p>
 
-									<!-- Tag Cloud -->
-									<div class="tagcloud clearfix bottommargin">
-										<a href="#">general</a>
-										<a href="#">informacion</a>
-										<a href="#">media</a>
-									</div><!-- .tagcloud end -->
+							<div class="clear"></div>
+
+							<!-- Post Single - Share -->
+							<div class="si-share noborder clearfix bg-linear-card">
+								<span>Comparte este post:</span>
+								<div>
+									<a href="#" class="social-icon si-borderless si-facebook">
+										<i class="icon-facebook"></i>
+										<i class="icon-facebook"></i>
+									</a>
+									<a href="#" class="social-icon si-borderless si-twitter">
+										<i class="icon-twitter"></i>
+										<i class="icon-twitter"></i>
+									</a>
+								</div>
+							</div><!-- Post Single - Share End -->
+
+						</div>
+					</div><!-- .entry end -->
+
+					<div class="line"></div>
+
+					<h4>Posts Relacionados</h4>
+
+					<div class="owl-carousel image-carousel carousel-widget flip-card-wrapper clearfix" data-margin="20" data-nav="true" data-pagi="false" data-items-xs="2" data-items-sm="2" data-items-md="2" data-items-lg="3" data-items-xl="3" style="overflow: visible;">
+						{% for rel_blog in related_post %}
+						
+						<div class="flip-card">
+							<div class="flip-card-front dark" style="background-image: url({{rel_blog.photo.url}})">
+								<div class="flip-card-inner">
+									<div class="card nobg noborder">
+										<div class="card-body">
+											<h3 class="card-title mb-0">{{rel_blog|striptags|truncatechars:20}}</h3>
+											<span class="font-italic">{{rel_blog.cantidad}} Comentarios</span>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="flip-card-back bg-danger no-after">
+								<div class="flip-card-inner">
+									<p class="mb-2 text-white">{{rel_blog.content|safe|striptags|truncatechars:50}}</p>
+									<a href="{% url 'blog_detail' rel_blog.slug %}" class="btn btn-outline-light mt-2">Ver detalles</a>
+								</div>
+							</div>
+						</div>
+
+						{% endfor %}
+
+					</div>
+
+					<div id="comments" class="clearfix">
+
+						<h3 id="comments-title"><span>3</span> Comentarios</h3>
+
+						<!-- Comments List -->
+						<ol class="commentlist clearfix">
+
+							<li class="comment even thread-even depth-1" id="li-comment-1">
+
+								<div id="comment-1" class="comment-wrap clearfix">
+
+									<div class="comment-meta">
+
+										<div class="comment-author vcard">
+
+											<span class="comment-avatar clearfix">
+											<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-60 photo avatar-default' height='60' width='60' /></span>
+
+										</div>
+
+									</div>
+
+									<div class="comment-content clearfix">
+
+										<div class="comment-author">John Doe<span><a href="#" title="Permalink to this comment">April 24, 2012 at 10:46 am</a></span></div>
+
+										<p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+
+										<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
+
+									</div>
 
 									<div class="clear"></div>
 
-									<!-- Post Single - Share -->
-									<div class="si-share noborder clearfix bg-linear-card">
-										<span>Comparte este post:</span>
-										<div>
-											<a href="#" class="social-icon si-borderless si-facebook">
-												<i class="icon-facebook"></i>
-												<i class="icon-facebook"></i>
-											</a>
-											<a href="#" class="social-icon si-borderless si-twitter">
-												<i class="icon-twitter"></i>
-												<i class="icon-twitter"></i>
-											</a>
-										</div>
-									</div><!-- Post Single - Share End -->
-
-								</div>
-							</div><!-- .entry end -->
-
-							<div class="line"></div>
-
-							<h4>Posts Relacionados</h4>
-
-							<div class="owl-carousel image-carousel carousel-widget flip-card-wrapper clearfix" data-margin="20" data-nav="true" data-pagi="false" data-items-xs="2" data-items-sm="2" data-items-md="2" data-items-lg="3" data-items-xl="3" style="overflow: visible;">
-
-								<div class="flip-card">
-									<div class="flip-card-front dark" style="background-image: url('demos/photography/images/items/18.jpg')">
-										<div class="flip-card-inner">
-											<div class="card nobg noborder">
-												<div class="card-body">
-													<h3 class="card-title mb-0">Trekking</h3>
-													<span class="font-italic">Chiang Mai</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="flip-card-back bg-danger no-after">
-										<div class="flip-card-inner">
-											<p class="mb-2 text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias cum repellat velit.</p>
-											<button type="button" class="btn btn-outline-light mt-2">View Details</button>
-										</div>
-									</div>
 								</div>
 
-							</div>
 
-							<div id="comments" class="clearfix">
+								<ul class='children'>
 
-								<h3 id="comments-title"><span>3</span> Comentarios</h3>
+									<li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-3">
 
-								<!-- Comments List -->
-								<ol class="commentlist clearfix">
-
-									<li class="comment even thread-even depth-1" id="li-comment-1">
-
-										<div id="comment-1" class="comment-wrap clearfix">
+										<div id="comment-3" class="comment-wrap clearfix">
 
 											<div class="comment-meta">
 
 												<div class="comment-author vcard">
 
 													<span class="comment-avatar clearfix">
-													<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-60 photo avatar-default' height='60' width='60' /></span>
+													<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' /></span>
 
 												</div>
 
@@ -133,76 +180,9 @@
 
 											<div class="comment-content clearfix">
 
-												<div class="comment-author">John Doe<span><a href="#" title="Permalink to this comment">April 24, 2012 at 10:46 am</a></span></div>
+												<div class="comment-author"><a href='#' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
 
-												<p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-
-												<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-											</div>
-
-											<div class="clear"></div>
-
-										</div>
-
-
-										<ul class='children'>
-
-											<li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-3">
-
-												<div id="comment-3" class="comment-wrap clearfix">
-
-													<div class="comment-meta">
-
-														<div class="comment-author vcard">
-
-															<span class="comment-avatar clearfix">
-															<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' /></span>
-
-														</div>
-
-													</div>
-
-													<div class="comment-content clearfix">
-
-														<div class="comment-author"><a href='#' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
-
-														<p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-														<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-													</div>
-
-													<div class="clear"></div>
-
-												</div>
-
-											</li>
-
-										</ul>
-
-									</li>
-
-									<li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1" id="li-comment-2">
-
-										<div id="comment-2" class="comment-wrap clearfix">
-
-											<div class="comment-meta">
-
-												<div class="comment-author vcard">
-
-													<span class="comment-avatar clearfix">
-													<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' /></span>
-
-												</div>
-
-											</div>
-
-											<div class="comment-content clearfix">
-
-												<div class="comment-author"><a href='http://themeforest.net/user/semicolonweb' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
-
-												<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+												<p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 
 												<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
 
@@ -214,171 +194,182 @@
 
 									</li>
 
-								</ol><!-- .commentlist end -->
+								</ul>
 
+							</li>
+
+							<li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1" id="li-comment-2">
+
+								<div id="comment-2" class="comment-wrap clearfix">
+
+									<div class="comment-meta">
+
+										<div class="comment-author vcard">
+
+											<span class="comment-avatar clearfix">
+											<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' /></span>
+
+										</div>
+
+									</div>
+
+									<div class="comment-content clearfix">
+
+										<div class="comment-author"><a href='http://themeforest.net/user/semicolonweb' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
+
+										<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+
+										<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
+
+									</div>
+
+									<div class="clear"></div>
+
+								</div>
+
+							</li>
+
+						</ol><!-- .commentlist end -->
+
+						<div class="clear"></div>
+
+						<!-- Comment Form -->
+						<div id="respond" class="clearfix">
+
+							<h3>Deja un <span>Comentario</span></h3>
+
+							<form class="clearfix" action="#" method="post" id="commentform">
+								
 								<div class="clear"></div>
 
-								<!-- Comment Form
-								============================================= -->
-								<div id="respond" class="clearfix">
-
-									<h3>Deja un <span>Comentario</span></h3>
-
-									<form class="clearfix" action="#" method="post" id="commentform">
-										<div class="bottom_padding_20">
-											<input id="checkbox-10" class="checkbox-style" name="checkbox-10" type="checkbox" checked="">
-											<label for="checkbox-10" class="checkbox-style-3-label">Publicar como usuario anonimo</label>
-										</div>
-										
-										<div class="clear"></div>
-
-										<div class="col_full">
-											<label for="comment">Comentario</label>
-											<textarea name="comment" cols="58" rows="7" tabindex="4" class="sm-form-control"></textarea>
-										</div>
-
-										<div class="col_full nobottommargin">
-											<button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d nomargin">Enviar</button>
-										</div>
-
-									</form>
-
-								</div><!-- #respond end -->
-
-							</div><!-- #comments end -->
-
-						</div>
-
-					</div><!-- .postcontent end -->
-
-					<!-- Sidebar -->
-					<div class="sidebar nobottommargin col_last clearfix">
-						<div class="sidebar-widgets-wrap">
-
-							<div class="widget clearfix">
-
-								<div class="tabs nobottommargin clearfix" id="sidebar-tabs">
-
-									<ul class="tab-nav clearfix">
-										<li><a href="#tabs-1">Popular</a></li>
-										<li><a href="#tabs-2">Ultimos</a></li>
-										<!--<li><a href="#tabs-3"><i class="icon-comments-alt norightmargin"></i></a></li>-->
-									</ul>
-
-									<div class="tab-container">
-
-										<div class="tab-content clearfix" id="tabs-1">
-											<div id="popular-post-list-sidebar">
-
-												<div class="spost clearfix">
-													<div class="entry-image">
-														<a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt=""></a>
-													</div>
-													<div class="entry-c">
-														<div class="entry-title">
-															<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
-														</div>
-														<ul class="entry-meta">
-															<li><i class="icon-comments-alt"></i> 35 Comments</li>
-														</ul>
-													</div>
-												</div>
-
-											</div>
-										</div>
-										<div class="tab-content clearfix" id="tabs-2">
-											<div id="recent-post-list-sidebar">
-
-												<div class="spost clearfix">
-													<div class="entry-image">
-														<a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/1.jpg" alt=""></a>
-													</div>
-													<div class="entry-c">
-														<div class="entry-title">
-															<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
-														</div>
-														<ul class="entry-meta">
-															<li>10th July 2014</li>
-														</ul>
-													</div>
-												</div>
-
-											</div>
-										</div>
-										
-
-									</div>
-
+								<div class="col_full">
+									<label for="comment">Comentario</label>
+									<textarea name="comment" cols="58" rows="7" tabindex="4" class="sm-form-control"></textarea>
 								</div>
 
-							</div>
+								<div class="bottom_padding_20">
+									<input id="checkbox-10" class="checkbox-style" name="checkbox-10" type="checkbox" checked="">
+									<label for="checkbox-10" class="checkbox-style-3-label">Publicar como usuario anonimo</label>
+								</div>
 
-							<div class="widget clearfix">
-
-								<h4>Recursos</h4>
-								<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
-
-									<div class="oc-item">
-										<div class="iportfolio">
-											<div class="portfolio-image">
-												<a href="#">
-													<img src="images/portfolio/4/3.jpg" alt="Mac Sunglasses">
-												</a>
-												<div class="portfolio-overlay">
-													<a href="http://vimeo.com/89396394" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-												</div>
-											</div>
-											<div class="portfolio-desc center nobottompadding">
-												<h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
-												<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
-											</div>
-										</div>
-									</div>
-
-									<div class="oc-item">
-										<div class="iportfolio">
-											<div class="portfolio-image">
-												<a href="portfolio-single.html">
-													<img src="images/portfolio/4/1.jpg" alt="Open Imagination">
-												</a>
-												<div class="portfolio-overlay">
-													<a href="images/blog/full/1.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-												</div>
-											</div>
-											<div class="portfolio-desc center nobottompadding">
-												<h3><a href="portfolio-single.html">Abre tu imaginacion</a></h3>
-												<span><a href="#">Media</a>, <a href="#">Icons</a></span>
-											</div>
-										</div>
-									</div>
-
+								<div class="col_full nobottommargin">
+									<button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d nomargin">Enviar</button>
 								</div>
 
 
-							</div>
+							</form>
 
-							<div class="widget clearfix">
-								<h4 class="highlight-me">Tags</h4>
-								<div class="tagcloud">
-									<a href="#">general</a>
-									<a href="#">videos</a>
-									<a href="#">salud</a>
-									<a href="#">sexualidad</a>
-									<a href="#">Embarazo adolescente</a>
-									<a href="#">ITS</a>
-									<a href="#">Anticonceptivos</a>
-									<a href="#">Mitos</a>
-								</div>
-							</div>
+						</div><!-- #respond end -->
 
-						</div>
-
-					</div><!-- .sidebar end -->
+					</div><!-- #comments end -->
 
 				</div>
 
-			</div>
+			</div><!-- .postcontent end -->
 
-		</section>
+			<!-- Sidebar -->
+			<div class="sidebar nobottommargin col_last clearfix">
+				<div class="sidebar-widgets-wrap">
+
+					<div class="widget clearfix">
+
+						<div class="tabs nobottommargin clearfix" id="sidebar-tabs">
+
+							<ul class="tab-nav clearfix">
+								<li><a href="#tabs-1">Popular</a></li>
+							</ul>
+
+							<div class="tab-container">
+
+								<div class="tab-content clearfix" id="tabs-1">
+									<div id="popular-post-list-sidebar">
+
+										<div class="spost clearfix">
+											<div class="entry-image">
+												<a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt=""></a>
+											</div>
+											<div class="entry-c">
+												<div class="entry-title">
+													<h4><a href="#">titulo blog</a></h4>
+												</div>
+												<ul class="entry-meta">
+													<li><i class="icon-comments-alt"></i> 35 Comentarios</li>
+												</ul>
+											</div>
+										</div>
+
+									</div>
+								</div>								
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="widget clearfix">
+
+						<h4>Recursos</h4>
+						<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+							{% for rs in rs_list %}
+								
+							
+							<div class="oc-item">
+								<div class="iportfolio">
+									<div class="portfolio-image">
+										<a href="#">
+											{% thumbnail rs.photo "250x188" crop="center" as im %}
+											<img src=" {{ im.url }}" srcset="{{ im.url }} {{ im.y }}h" alt="">
+
+											{% empty %}
+											<img src="http://via.placeholder.com/250x188" alt="">
+
+											
+											{%endthumbnail%}
+										</a>
+										<div class="portfolio-overlay">
+											<a href="{{rs.photo.url}}" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+										</div>
+									</div>
+									<div class="portfolio-desc center nobottompadding">
+										<h3>
+											<a href="{% url 'resource_detail' rs.slug %}">{{rs|striptags|truncatechars:25}}</a>
+										</h3>
+										<span>
+											<a href="#">{{rs.thematic}}</a>
+										</span>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+
+						</div>
+
+
+					</div>
+
+					<div class="widget clearfix">
+						<h4 class="highlight-me">Tags</h4>
+						<div class="tagcloud">
+							<a href="#">general</a>
+							<a href="#">videos</a>
+							<a href="#">salud</a>
+							<a href="#">sexualidad</a>
+							<a href="#">Embarazo adolescente</a>
+							<a href="#">ITS</a>
+							<a href="#">Anticonceptivos</a>
+							<a href="#">Mitos</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div><!-- .sidebar end -->
+
+		</div>
+
+	</div>
+
+</section>
 
 {% endblock content %}

@@ -1,79 +1,186 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% block content %}
+	<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
 
-<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
-
-	<div class="container clearfix">
-		<h1>Recursos Educativos</h1>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-			<li class="breadcrumb-item active bdcrumlg" aria-current="page">Recursos Educativos</li>
-		</ol>
-	</div>
-
-</section>
-
-<section id="content">
-
-	<div class="content-wrap">
-
-		<div class="container clearfix">
-
-			<!-- Post Content -->
-			<div class="postcontent nobottommargin clearfix">
-				<h4 class="text-center">{{object}}</h4>
-
-				<div class="row">
-					<div class="col-4">
-						<div class="list-group" id="list-tab" role="tablist">
-							<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
-							<a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-							<a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-							<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
-						</div>
-					</div>
-					<div class="col-8">
-						<div class="tab-content" id="nav-tabContent">
-							<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit nisi veritatis enim, eaque quibusdam eius vel? Vel natus adipisci sit, omnis et enim nostrum quia hic atque odit, numquam deleniti. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum libero vitae neque laboriosam suscipit cupiditate animi porro distinctio excepturi, beatae quas officiis dolorem sit aliquid vel ab consequatur eveniet soluta necessitatibus quidem? Iure, consequuntur non odio accusamus est repudiandae culpa!</p>
-							</div>
-							<div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-								<p>Nobis laudantium est repellendus ad cumque ex quasi alias, quas veritatis nam optio deleniti itaque, expedita, quo quidem temporibus? Voluptate ratione numquam ex quae, culpa eos eum dolor a dolore vitae praesentium animi? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum earum beatae quibusdam aspernatur impedit fuga excepturi sapiente pariatur blanditiis provident repudiandae inventore veritatis tenetur eum nisi magni explicabo dolorem atque recusandae praesentium non, mollitia dignissimos fugit! Reiciendis consectetur eligendi corporis!</p>
-							</div>
-							<div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-								<p>Quam aspernatur incidunt iure soluta consequatur veniam exercitationem deleniti ullam, molestiae similique odio facilis iusto numquam. Quasi voluptatem laborum deleniti neque, necessitatibus repellat, ipsam repudiandae dignissimos. Deleniti soluta facere fugiat repudiandae delectus, perspiciatis quibusdam animi odit, eius iste vitae modi nesciunt maiores quasi repellendus eaque ratione tempora eos minus eum excepturi qui praesentium, ipsam. Maiores nulla eum dolorum saepe ullam officia consequatur blanditiis harum aperiam sequi. Dolorem odio aliquid amet error eveniet excepturi quis, suscipit, cumque itaque ab dicta magnam dolorum voluptatum cupiditate placeat atque delectus eius facilis mollitia possimus!</p>
-							</div>
-							<div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-								<p>Placeat doloribus earum voluptate delectus porro reprehenderit unde vero neque obcaecati, aperiam, dicta, tenetur labore consequuntur enim error quidem facere eum eveniet repellendus et fugit debitis! Laudantium, dolore quasi quae rem repellendus sit hic. Nobis vel ab ratione quisquam nesciunt blanditiis et itaque iste eos atque placeat expedita quis aliquam rerum dolore fuga, dicta. Veritatis inventore adipisci cupiditate ducimus laborum eaque atque deleniti repellendus pariatur veniam repellat id laudantium, asperiores provident tempora eveniet, nihil esse facere iusto aliquam maiores, iste. Quaerat, sapiente repudiandae aspernatur animi maiores, nesciunt veritatis quam, suscipit asperiores vitae itaque! Autem, architecto, repellendus. Laudantium labore, doloremque necessitatibus quod sint iure ab officiis delectus molestias sunt illum velit harum ullam! Blanditiis corporis reiciendis pariatur, amet magni animi. Laboriosam animi ducimus a.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
+			<div class="container clearfix">
+				<h1>Recursos Educativos</h1>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Inicio</a></li>
+					<li class="breadcrumb-item active bdcrumlg" aria-current="page">Recursos Educativos</li>
+				</ol>
 			</div>
 
-			<!-- sidebar -->
+		</section>
 
-			<div class="sidebar nobottommargin col_last clearfix">
-				<div class="sidebar-widgets-wrap">
+		<section id="content">
 
-					<div class="widget widget_links clearfix">
+			<div class="content-wrap">
 
-						<h4>Shortcodes</h4>
-						<ul>
-							<li>
-								<a href="animations.html">
-									<div>Animations</div>
-								</a>
-							</li>
+				<div class="container clearfix">
+
+					<!-- Post Content -->
+					<div class="postcontent nobottommargin">
+
+						<!-- Portfolio Filter -->
+						<ul id="portfolio-filter" class="portfolio-filter clearfix" data-container="#portfolio">
+
+							<li class="activeFilter"><a href="#" data-filter="*">Todos</a></li>
+							<li><a href="#" data-filter=".pf-icons">ETS</a></li>
+							<li><a href="#" data-filter=".pf-illustrations">Embarazo adolescente</a></li>
+
+						</ul><!-- #portfolio-filter end -->
+
+						<div id="portfolio-shuffle" class="portfolio-shuffle" data-container="#portfolio">
+							<i class="icon-random"></i>
+						</div>
+
+						<div class="clear"></div>
+
+						<!-- Portfolio Items -->
+						<div id="portfolio" class="portfolio portfolio-1 grid-container clearfix">
+
+							{% for res in res_list %}
+							
+							<article class="customcards portfolio-item pf-media pf-icons clearfix">
+								<div class="portfolio-image">
+									<a href="{% url 'resource_detail' res.slug%}">
+										{% thumbnail res.photo "458x304" crop="center" as im %}
+										<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w">
+										{% endthumbnail%}
+										
+									</a>
+									<div class="portfolio-overlay">
+										<a href="{{res.photo.url}}" class="left-icon" data-lightbox="image">
+											<i class="icon-line-plus"></i>
+										</a>
+										<a href="{% url 'resource_detail' res.slug%}" class="right-icon">
+											<i class="icon-line-ellipsis"></i>
+										</a>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{% url 'resource_detail' res.slug %}" style="max-height:26px;overflow:hidden">{{res|striptags|truncatechars:28}}</a></h3>
+									<span>
+										<a href="#">{{res.thematic}}</a></span>
+									<p>{{res.content|safe|striptags|truncatechars:110}}</p>
+									<ul class="iconlist">
+										
+										<li>
+											<i class="icon-ok"></i> 
+											<strong>Por:</strong> {{res.thematic}}
+										</li>
+										<li>
+											<i class="icon-ok"></i> 
+											<strong>Por:</strong> {{res.author}}
+										</li>
+
+										<li>
+											<i class="icon-ok"></i>
+											<strong>Fecha:</strong> {{res.created_on|date:"SHORT_DATE_FORMAT"}}
+										</li>
+									</ul>
+									<a href="{% url 'resource_detail' res.slug %}" class="button button-3d noleftmargin">Ver más</a>
+
+								</div>
+							</article>
+
+							{% endfor %}
+
+						</div><!-- #portfolio end -->
+
+
+						<ul class="boxed-slider pagination pagination-circle pagination-lg justify-content-center top_padding_30">
+							<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">«</span></a></li>
+							<li class="page-item active"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li>
+							<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
 						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
 
-	{{object}}
+					</div><!-- .postcontent end -->
+
+					<!-- Sidebar -->
+					<div class="sidebar nobottommargin col_last">
+						<div class="sidebar-widgets-wrap">
+
+							<div class="widget clearfix">
+								<div class="input-group mx-auto" style="">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="icon-search2" style="color:#1ABC9C"></i>
+										</span>
+									</div>
+									<input type="text" id="icons-filter" class="form-control" value="" placeholder="Buscar" style="background-color: #f1f7ff;">
+								</div>
+								
+							</div>
+
+							
+
+							<div class="widget clearfix">
+
+								<h4>Blogs Recientes</h4>
+								<div id="post-list-footer">
+
+									{% for blog in latest_blogs %}
+									
+									<div class="spost clearfix">
+										<div class="entry-image">
+											<a href="#" class="nobg">
+												{% thumbnail blog.photo "48x48" crop="center" as im %}
+												<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+
+												{%empty%}
+												<img src="http://via.placeholder.com/48x48" alt="">
+
+												{% endthumbnail%}
+
+												<img src="images/magazine/small/1.jpg" alt="">
+											</a>
+											
+										</div>
+										<div class="entry-c">
+											<div class="entry-title">
+												<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+											</div>
+											<ul class="entry-meta">
+												<li>10th July 2014</li>
+											</ul>
+										</div>
+									</div>
+
+									{% endfor %}
+								</div>
+
+							</div>
+
+							<div class="widget clearfix">
+								<h4 class="highlight-me">Tags</h4>
+								<div class="tagcloud">
+									<a href="#">general</a>
+									<a href="#">videos</a>
+									<a href="#">salud</a>
+									<a href="#">sexualidad</a>
+									<a href="#">Embarazo adolescente</a>
+									<a href="#">ITS</a>
+									<a href="#">Anticonceptivos</a>
+									<a href="#">Mitos</a>
+								</div>
+							</div>
+
+							
+
+						</div>
+					</div><!-- .sidebar end -->
+
+
+
+				</div>
+
+			</div>
+
+		</section>
 {% endblock content %}

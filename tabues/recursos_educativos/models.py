@@ -40,6 +40,7 @@ class Educational_Resource(models.Model):
 	photo = ImageField('Foto',upload_to='recursos-educativos/',blank=True)
 	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
 	content = RichTextUploadingField(verbose_name='Contenido')
+	created_on = models.DateField('Fecha de creación', auto_now_add=True)
 	slug = models.SlugField(max_length=200, editable=False)
 	author = models.ForeignKey(User, on_delete=models.DO_NOTHING,verbose_name='Autor')
 
