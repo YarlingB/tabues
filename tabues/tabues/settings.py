@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'taggit',
 	'taggit_autosuggest',
 	'location_field.apps.DefaultConfig',
+	'el_pagination',
 ]
 
 AUTH_USER_MODEL = 'user.User'

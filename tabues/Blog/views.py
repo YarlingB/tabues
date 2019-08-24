@@ -12,7 +12,7 @@ def blogs(request, template= 'blog.html'):
 	return render(request,template,locals())
 
 def blog_detail(request,slug,template='blog_detalle.html'):
-	object = Blog.objects.get(slug=slug);
+	object = Blog.objects.get(slug=slug)
 	_post = Blog.objects.filter(thematic = object.thematic.id).exclude(id=object.id).order_by('-created_on')
 	related_post = _post.annotate(cantidad = Count('comment')).order_by('-cantidad')
 	rs_list = Educational_Resource.objects.order_by('-id')[:3]

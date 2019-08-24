@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load el_pagination_tags %}
 {% load thumbnail %}
 
 {% block content %}
@@ -6,10 +7,10 @@
 <section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
 
 	<div class="container clearfix">
-		<h1>Test</h1>
+		<h1>Blogs</h1>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-			<li class="breadcrumb-item active bdcrumlg" aria-current="page">Test</li>
+			<li class="breadcrumb-item active bdcrumlg" aria-current="page">Blogs</li>
 		</ol>
 	</div>
 
@@ -26,7 +27,8 @@
 
 				<!-- Posts -->
 				<div id="posts" class="small-thumbs">
-					
+
+					{% paginate 4 blogs_list %}
 					{% for blog in blogs_list %}
 					
 					<div class="entry clearfix customcards">
@@ -44,10 +46,10 @@
 								<h2><a href="{% url 'blog_detail' blog.slug %}">{{blog|striptags|truncatechars:60}}</a></h2>
 							</div>
 							<ul class="entry-meta clearfix sg_detail">
-								<li><i class="icon-calendar3"></i> {{blog.created_on}}</li>
-								<li><a href="#"><i class="icon-user"></i> {{blog.author}}</a></li>
-								<li><i class="icon-folder-open"></i> <a href="#">{{blog.thematic}}</a></li>
-								<li><a href="blog-single.html#comments"><i class="icon-comments"></i> {{blog.comm}}</a></li>
+								<li><i class="icon-calendar3 dark_purple"></i> {{blog.created_on}}</li>
+								<li><a href="#"><i class="icon-user dark_purple"></i></i> {{blog.author}}</a></li>
+								<li><i class="icofont-package dark_purple"></i> <a href="#">{{blog.thematic}}</a></li>
+								<li><a href="blog-single.html#comments"><i class="icon-comments dark_purple"></i> {{blog.comm}}</a></li>
 								
 							</ul>
 							<div class="entry-content">
@@ -65,13 +67,34 @@
 					<!-- Pagination -->
 
 					<ul class="pagination pagination-circle pagination-lg justify-content-center top_padding_30">
-						<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">«</span></a></li>
-						<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+
+						{% get_pages %}
+						{% if pages.paginated %}
+
+						<li class="page-item">
+							<a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous"> <span aria-hidden="true">«</span>
+							</a>
+						</li>
+
+						{% for page in pages %}
+						{% if page.current %}
+
+						<li class="page-item {% if page.is_current %} active {% endif %}">
+							<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+						</li>
+						{% else %}
+						<li class="page-item {% if page.is_current %} active {% endif %}">
+							<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+						</li>
+
+							{% endif %}
+						{% endfor %}
+						<li class="page-item">
+							<a class="page-link" href="{{ pages.next.path }}" aria-label="Next">
+								<span aria-hidden="true">»</span>
+							</a>
+						</li>
+						{% endif %}
 					</ul>
 
 
@@ -92,8 +115,6 @@
 							</div>
 
 						</div>
-
-
 
 						<div class="widget clearfix">
 

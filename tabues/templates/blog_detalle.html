@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load thumbnail %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/jquery.fancybox.min.css" />
+{% endblock %}
+
+
 {% block content %}
 	
 <section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
@@ -35,25 +41,7 @@
 						</div><!-- .entry-title end -->
 
 						<!-- Entry Meta -->
-						<ul class="entry-meta clearfix">
-							<li>
-								<i class="icon-calendar3"></i> {{object.created_on}}
-							</li>
-							<li>
-								<a href="#">
-									<i class="icon-user"></i> {{object.author}}
-								</a>
-							</li>
-							<li>
-								<i class="icon-folder-open"></i> 
-								<a href="#">{{object.thematic}}</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="icon-comments"></i> 23 Comentarios
-								</a>
-							</li>
-						</ul><!-- .entry-meta end -->
+
 
 						<!-- Entry Image -->
 						<div class="entry-image">
@@ -68,6 +56,22 @@
 							</a>
 						</div><!-- .entry-image end -->
 
+						<ul class="entry-meta clearfix sg_detail">
+							<li>
+								<i class="icon-calendar3"></i> {{object.created_on}}
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-user"></i> {{object.author}}
+								</a>
+							</li>
+							<li>
+								<i class="icon-folder-open"></i> 
+								<a href="#">{{object.thematic}}</a>
+							</li>
+							
+						</ul>
+
 						<!-- Entry Content -->
 						<div class="entry-content notopmargin">
 
@@ -76,7 +80,7 @@
 							<div class="clear"></div>
 
 							<!-- Post Single - Share -->
-							<div class="si-share noborder clearfix bg-linear-card">
+							<div class="customcards si-share noborder clearfix bg-linear-card" style="background:linear-gradient(45deg, #fdf8ff, transparent)">
 								<span>Comparte este post:</span>
 								<div>
 									<a href="#" class="social-icon si-borderless si-facebook">
@@ -95,7 +99,8 @@
 
 					<div class="line"></div>
 
-					<h4>Posts Relacionados</h4>
+					<h4>Post Relacionados</h4>
+					<div class="divider"><i class="icon-circle"></i></div>
 
 					<div class="owl-carousel image-carousel carousel-widget flip-card-wrapper clearfix" data-margin="20" data-nav="true" data-pagi="false" data-items-xs="2" data-items-sm="2" data-items-md="2" data-items-lg="3" data-items-xl="3" style="overflow: visible;">
 						{% for rel_blog in related_post %}
@@ -198,36 +203,7 @@
 
 							</li>
 
-							<li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1" id="li-comment-2">
-
-								<div id="comment-2" class="comment-wrap clearfix">
-
-									<div class="comment-meta">
-
-										<div class="comment-author vcard">
-
-											<span class="comment-avatar clearfix">
-											<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' /></span>
-
-										</div>
-
-									</div>
-
-									<div class="comment-content clearfix">
-
-										<div class="comment-author"><a href='http://themeforest.net/user/semicolonweb' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
-
-										<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-
-										<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-									</div>
-
-									<div class="clear"></div>
-
-								</div>
-
-							</li>
+							
 
 						</ol><!-- .commentlist end -->
 
@@ -373,3 +349,19 @@
 </section>
 
 {% endblock content %}
+
+{% block extra_js %}
+	<script src="/static/js/jquery.fancybox.min.js"></script>
+<script>
+$('.fancybox').fancybox({ 
+	afterShow: function(){     
+		$('.fancybox-iframe').contents().find('input').click(function(){
+			window.parent.location.reload();
+			window.parent.$.fancybox.close();
+		}); 
+	}
+});
+</script>
+{% endblock extra_js %}
+
+

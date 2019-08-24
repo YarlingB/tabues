@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+	
+{% block content %}
+
+	<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+		<div class="container clearfix">
+			<h1>Eventos</h1>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">Inicio</a></li>
+				<li class="breadcrumb-item active bdcrumlg" aria-current="page">Eventos</li>
+			</ol>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+
+			<div class="container clearfix">
+
+				<div class="postcontent nobottommargin">
+
+					<div id="posts" class="events small-thumbs">
+
+						{% for event in event_list %}
+
+						<div class="entry clearfix customcards">
+							<div class="entry-image">
+								<a href="">
+									{%thumbnail event.photo "300x250" crop="center" as im %}
+									<img src="{{im.url}}" alt="Inventore voluptates velit totam ipsa tenetur">
+									{% endthumbnail%}
+
+									<div class="entry-date">{{event.init_date|date:"d"}}<span>{{event.init_date|date:"M"}}</span></div>
+								</a>
+							</div>
+							<div class="entry-c">
+								<div class="entry-title">
+									<h2><a href="{% url 'event_detail' event.slug %}">{{event|striptags|truncatechars:30}}</a></h2>
+								</div>
+								<ul class="entry-meta clearfix">
+									<li>
+										<span class="badge badge-warning">
+											<i class="icon-map-marker2"></i> {{event.reference_point}}
+										</span>
+									</li>
+
+									<li>
+										<span class="badge badge-light">
+											<i class="icon-time">
+												
+											</i> {{event.init_hour}} - {{event.end_hour}}
+										</span>
+
+										</li>
+									<li>
+										<span class="badge badge-light">
+											<i class="icon-user1">
+												
+											</i> {{event.author}}
+										</span>
+									</li>
+								</ul>
+								<div class="entry-content">
+									<p style="min-height:75px;">{{event.description|safe|striptags|truncatechars:250}}</p>
+									<a href="{% url 'event_detail' event.slug %}" class="btn btn-danger">Ver más</a>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+
+
+
+
+					</div>
+
+					<!-- Paginacion -->
+
+					<!-- .Paginacion fin -->
+
+				</div>
+
+				<div class="sidebar nobottommargin col_last clearfix">
+					<div class="sidebar-widgets-wrap">
+
+						<div class="widget clearfix">
+							<div class="input-group mx-auto" style="">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<i class="icon-search2" style="color:#1ABC9C"></i>
+									</span>
+								</div>
+								<input type="text" id="icons-filter" class="form-control" value="" placeholder="Buscar" style="background-color: #f1f7ff;">
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Blogs Destacados</h4>
+							<div id="post-list-footer">
+								{% for blog in highlight_blogs %}
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+
+										<a href="{% url 'blog_detail' blog.slug %}" class="nobg">
+											{% thumbnail blog.photo "48x48" crop="center" as im%}
+											<img src="{{im.url}}" alt="">
+											{% endthumbnail%}
+										</a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">{{blog}}</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>{{blog.created_on}}</li>
+										</ul>
+									</div>
+								</div>
+								{% endfor %}
+
+							</div>
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Recursos</h4>
+							<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+								{% for res in last_rs %}
+								<div class="oc-item">
+									<div class="iportfolio">
+										<div class="portfolio-image">
+											{% thumbnail res.photo "250x180" crop="center" as im%}
+											<a href="#">
+												
+												<img src="{{im.url}}" alt="">
+											</a>
+											<div class="portfolio-overlay">
+												<a href="{{im.url}}" class="center-icon" data-lightbox="image">
+													<i class="icon-line-plus"></i>
+												</a>
+											</div>
+											{% endthumbnail%}
+										</div>
+										<div class="portfolio-desc center nobottompadding">
+											<h3>
+												<a href="{% url 'resource_detail' res.slug%}">{{res|striptags|truncatechars:30}}</a>
+											</h3>
+											<span>
+												<a href="{% url 'resource_detail' res.slug%}">{{res.thematic}}</a>
+											</span>
+										</div>
+									</div>
+								</div>
+								{% endfor %}								
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4> Video</h4>
+							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+			
+
+	</section>
+{% endblock content %}

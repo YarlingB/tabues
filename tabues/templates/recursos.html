@@ -1,82 +1,87 @@
 {% extends "base.html" %}
+{% load el_pagination_tags %}
 {% load thumbnail %}
+
 {% block content %}
 	<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
 
+		<div class="container clearfix">
+			<h1>Recursos Educativos</h1>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">Inicio</a></li>
+				<li class="breadcrumb-item active bdcrumlg" aria-current="page">Recursos Educativos</li>
+			</ol>
+		</div>
+
+	</section>
+
+	<section id="content">
+
+		<div class="content-wrap">
+
 			<div class="container clearfix">
-				<h1>Recursos Educativos</h1>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-					<li class="breadcrumb-item active bdcrumlg" aria-current="page">Recursos Educativos</li>
-				</ol>
-			</div>
 
-		</section>
+				<!-- Post Content -->
+				<div class="postcontent nobottommargin">
 
-		<section id="content">
+					<!-- Portfolio Filter -->
+					<ul id="portfolio-filter" class="portfolio-filter clearfix" data-container="#portfolio">
 
-			<div class="content-wrap">
+						<li class="activeFilter"><a href="#" data-filter="*">Todos</a></li>
+						<li><a href="#" data-filter=".pf-icons">ETS</a></li>
+						<li><a href="#" data-filter=".pf-illustrations">Embarazo Prematuro</a></li>
 
-				<div class="container clearfix">
+					</ul><!-- #portfolio-filter end -->
 
-					<!-- Post Content -->
-					<div class="postcontent nobottommargin">
+					<div id="portfolio-shuffle" class="portfolio-shuffle" data-container="#portfolio">
+						<i class="icon-random"></i>
+					</div>
 
-						<!-- Portfolio Filter -->
-						<ul id="portfolio-filter" class="portfolio-filter clearfix" data-container="#portfolio">
+					<div class="clear"></div>
 
-							<li class="activeFilter"><a href="#" data-filter="*">Todos</a></li>
-							<li><a href="#" data-filter=".pf-icons">ETS</a></li>
-							<li><a href="#" data-filter=".pf-illustrations">Embarazo adolescente</a></li>
+					<!-- Portfolio Items -->
+					<div id="portfolio" class="portfolio portfolio-1 grid-container clearfix">
+						{% paginate 4 res_list %}
 
-						</ul><!-- #portfolio-filter end -->
+						{% for res in res_list %}
 
-						<div id="portfolio-shuffle" class="portfolio-shuffle" data-container="#portfolio">
-							<i class="icon-random"></i>
-						</div>
+						<article class="customcards portfolio-item pf-media pf-icons clearfix">
+							<div class="portfolio-image">
+								<a href="{% url 'resource_detail' res.slug%}">
+									{% thumbnail res.photo "458x304" crop="center" as im %}
+									<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w">
+									{% endthumbnail%}
 
-						<div class="clear"></div>
-
-						<!-- Portfolio Items -->
-						<div id="portfolio" class="portfolio portfolio-1 grid-container clearfix">
-
-							{% for res in res_list %}
-							
-							<article class="customcards portfolio-item pf-media pf-icons clearfix">
-								<div class="portfolio-image">
-									<a href="{% url 'resource_detail' res.slug%}">
-										{% thumbnail res.photo "458x304" crop="center" as im %}
-										<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w">
-										{% endthumbnail%}
-										
+								</a>
+								<div class="portfolio-overlay">
+									<a href="{{res.photo.url}}" class="left-icon" data-lightbox="image">
+										<i class="icon-line-plus"></i>
 									</a>
-									<div class="portfolio-overlay">
-										<a href="{{res.photo.url}}" class="left-icon" data-lightbox="image">
-											<i class="icon-line-plus"></i>
-										</a>
-										<a href="{% url 'resource_detail' res.slug%}" class="right-icon">
-											<i class="icon-line-ellipsis"></i>
-										</a>
-									</div>
+									<a href="{% url 'resource_detail' res.slug%}" class="right-icon">
+										<i class="icon-line-ellipsis"></i>
+									</a>
 								</div>
-								<div class="portfolio-desc">
-									<h3><a href="{% url 'resource_detail' res.slug %}" style="max-height:26px;overflow:hidden">{{res|striptags|truncatechars:28}}</a></h3>
-									<span>
-										<a href="#">{{res.thematic}}</a></span>
+							</div>
+							<div class="portfolio-desc">
+								<h3>
+									<a href="{% url 'resource_detail' res.slug %}" style="max-height:26px;overflow:hidden">{{res|striptags|truncatechars:28}}</a>
+								</h3>
+								<span>
+									<a href="#">{{res.get_info_type_display}}</a></span>
 									<p>{{res.content|safe|striptags|truncatechars:110}}</p>
 									<ul class="iconlist">
 										
 										<li>
-											<i class="icon-ok"></i> 
-											<strong>Por:</strong> {{res.thematic}}
+											<i class="icon-file-medical-alt dark_purple"></i> 
+											{{res.thematic}}
 										</li>
 										<li>
-											<i class="icon-ok"></i> 
-											<strong>Por:</strong> {{res.author}}
+											<i class="icon-user-edit dark_purple"></i> 
+											{{res.author}}
 										</li>
 
 										<li>
-											<i class="icon-ok"></i>
+											<i class="icon-calendar2 dark_purple"></i>
 											<strong>Fecha:</strong> {{res.created_on|date:"SHORT_DATE_FORMAT"}}
 										</li>
 									</ul>
@@ -91,13 +96,34 @@
 
 
 						<ul class="boxed-slider pagination pagination-circle pagination-lg justify-content-center top_padding_30">
-							<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">«</span></a></li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+
+							{% get_pages %}
+							{% if pages.paginated %}
+
+							<li class="page-item">
+								<a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous"> <span aria-hidden="true">«</span></a>
+							</li>
+
+							{% for page in pages %}
+								{% if page.current %}
+
+							<li class="page-item {% if page.is_current %} active {% endif %}">
+								<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+							</li>
+							{% else %}
+							<li class="page-item {% if page.is_current %} active {% endif %}">
+								<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+							</li>
+
+							{% endif %}
+
+							{% endfor %}
+							<li class="page-item">
+								<a class="page-link" href="{{ pages.next.path }}" aria-label="Next"><span aria-hidden="true">»</span>
+								</a>
+							</li>
+							{% endif %}
+
 						</ul>
 
 					</div><!-- .postcontent end -->
@@ -129,7 +155,7 @@
 									
 									<div class="spost clearfix">
 										<div class="entry-image">
-											<a href="#" class="nobg">
+											<a href="{% url 'resource_detail' blog.slug %}" class="nobg">
 												{% thumbnail blog.photo "48x48" crop="center" as im %}
 												<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w" alt="">
 
@@ -144,10 +170,10 @@
 										</div>
 										<div class="entry-c">
 											<div class="entry-title">
-												<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+												<h4><a href="{% url 'resource_detail' blog.slug %}">{{blog}}</a></h4>
 											</div>
 											<ul class="entry-meta">
-												<li>10th July 2014</li>
+												<li>{{blog.created_on|date:"d F y"}}</li>
 											</ul>
 										</div>
 									</div>

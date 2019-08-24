@@ -5,6 +5,10 @@ from sorl.thumbnail import ImageField
 from user.models import User
 
 # Create your models here.
+info_type=(
+	(1,'ETS'),
+	(2,'Embarazo')
+)
 class Thematic(models.Model):
 	name = models.CharField('Nombre',max_length=200, unique=True)
 
@@ -18,6 +22,7 @@ class Thematic(models.Model):
 class Learning(models.Model):
 	tittle = models.CharField('Título', max_length=200)
 	photo = ImageField('Foto',upload_to='recursos-educativos/aprende')
+	info_type = models.PositiveSmallIntegerField('Categoría',choices=info_type)	
 	content = RichTextUploadingField(verbose_name='Contenido')
 	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
 	created_on = models.DateField('Fecha de creación', auto_now_add=True)
@@ -38,6 +43,7 @@ class Learning(models.Model):
 class Educational_Resource(models.Model):
 	tittle = models.CharField('Título',max_length=200)
 	photo = ImageField('Foto',upload_to='recursos-educativos/',blank=True)
+	info_type = models.PositiveSmallIntegerField('Categoría',choices=info_type)
 	thematic = models.ForeignKey(Thematic, on_delete = models.DO_NOTHING,verbose_name='Temática')
 	content = RichTextUploadingField(verbose_name='Contenido')
 	created_on = models.DateField('Fecha de creación', auto_now_add=True)

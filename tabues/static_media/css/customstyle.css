@@ -9,3 +9,7 @@
     background: linear-gradient(45deg, #d6d2ef, #927b7b00);
     border-radius: 5px;
 }
+
+.dark_purple{
+	color: #1f1142 !important;
+}
