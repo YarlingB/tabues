@@ -37,10 +37,6 @@ class Comment(models.Model):
 		verbose_name='Comentario'
 		verbose_name_plural='Comentarios'
 
-	def __str__(self):
-		return self.blog
-
-
 class Answer(models.Model):
 	comment = models.ForeignKey(Comment,on_delete=models.CASCADE,verbose_name='Comentario')
 	content = RichTextUploadingField('Contenido')

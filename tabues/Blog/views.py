@@ -19,7 +19,6 @@ def blog_detail(request,slug,template='blog_detalle.html'):
 	related_post = Blog.objects.filter(thematic = object.thematic.id).annotate(cantidad = Count('comment')).order_by('-cantidad')
 	rs_list = Educational_Resource.objects.order_by('-id')[:3]
 
-
 	if request.method == 'POST':
 		form = CommentForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -31,4 +30,10 @@ def blog_detail(request,slug,template='blog_detalle.html'):
 
 	else:
 		form = CommentForm()
+	return render(request,template,locals())
+
+
+def add_answer(request,id,template='add_answer'):
+	if reques.method == 'POST':
+		
 	return render(request,template,locals())
