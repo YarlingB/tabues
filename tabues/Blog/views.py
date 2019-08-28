@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+
 from .models import *
 from .forms import *
 
@@ -29,11 +31,20 @@ def blog_detail(request,slug,template='blog_detalle.html'):
 			form = CommentForm()
 
 	else:
+
 		form = CommentForm()
 	return render(request,template,locals())
 
-
-def add_answer(request,id,template='add_answer'):
-	if reques.method == 'POST':
-		
+@login_required
+def add_answer(request,id,template='add_answer.html'):
+	object = Comment.objects.get(id=id)
+	if request.method == 'POST':
+		form = AnswerForm(request.POST, request.FILES)
+		if form.is_valid():
+			a_comment = form.save(commit=False)
+			a_comment.comment = object
+			a_comment.user = request.user
+			a_comment.save()
+	else:
+		form = AnswerForm()
 	return render(request,template,locals())

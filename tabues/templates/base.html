@@ -18,7 +18,10 @@
 	<link rel="stylesheet" href="/static/css/responsive.css" type="text/css" />
 	<link rel="stylesheet" href="/static/css/icofont.min.css" type="text/css" />
 	<link rel="stylesheet" href="/static/css/customstyle.css" type="text/css" />
-
+	
+	{% block extra_css %}
+		
+	{% endblock extra_css %}
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<title>Tabues</title>
@@ -305,7 +308,7 @@
 
 	<!-- Footer Scripts -->
 		<script src="/static/js/functions.js"></script>
-
+		{% block extra_js %}{% endblock extra_js %}
 
 	</body>
 	</html>

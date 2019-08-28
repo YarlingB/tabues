@@ -29,6 +29,7 @@ class Blog(models.Model):
 
 class Comment(models.Model):
 	blog = models.ForeignKey(Blog,on_delete=models.CASCADE, verbose_name='Blog')
+	is_anonymous = models.BooleanField(default=True) 
 	content = RichTextUploadingField('Contenido')
 	created_on = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='usuario')
@@ -40,6 +41,7 @@ class Comment(models.Model):
 class Answer(models.Model):
 	comment = models.ForeignKey(Comment,on_delete=models.CASCADE,verbose_name='Comentario')
 	content = RichTextUploadingField('Contenido')
+	is_anonymous = models.BooleanField(default=True) 
 	created_on = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
 

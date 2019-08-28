@@ -167,11 +167,16 @@
 
 											<div class="comment-content clearfix">
 
-												<div class="comment-author">{{m_comm.user}}<span><a href="#" title="Permalink to this comment">{{m_comm.created_on}}</a></span></div>
+												<div class="comment-author">{{m_comm.user}}
+													<span title="Fecha de publicación">
+													{{m_comm.created_on}}
+													
+												</span>
+											</div>
 
 												<p>{{m_comm.content|safe}}</p>
 
-												<a class='comment-reply-link' href='#'>
+												<a title="Responder" class='comment-reply-link fancybox' href="javascript:;" data-type="iframe" data-options='{"iframe" : {"css" : {"height" : "90%", "width":"75%"}}}' data-src="{% url 'add_answer' m_comm.id %}">
 													<i class="icon-reply"></i>
 												</a>
 
@@ -250,14 +255,16 @@
 								<div class="clear"></div>							
 
 								<div class="col_full">
-									{{form}}
+									{{form.content}}
 								</div>
 
 								
 
-								<div class="bottom_padding_20">
-									<input id="checkbox-10" class="checkbox-style" name="checkbox-10" type="checkbox" checked="">
-									<label for="checkbox-10" class="checkbox-style-3-label">Publicar como usuario anonimo</label>
+								<div class="bottom_padding_20 checkbox">
+									<label for="isanonymous" class="checkbox-style" type="checkbox" checked="">
+										{{form.is_anonymous}}
+										Publicar como usuario anonimo     
+									</label>
 								</div>
 
 								<div class="col_full nobottommargin">
@@ -390,6 +397,7 @@
 
 {% block extra_js %}
 	<script src="/static/js/jquery.fancybox.min.js"></script>
+
 <script>
 $('.fancybox').fancybox({ 
 	afterShow: function(){     
