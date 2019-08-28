@@ -1,5 +1,214 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
+{% block extra_css %}
+<link rel = "stylesheet" href = "/static/css/leaflet.css"/>
+{% endblock extra_css %}
 {% block content %}
-	
+<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+	<div class="container clearfix">
+		<h1>{{object}}</h1>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="">Inicio</a></li>
+			<li class="breadcrumb-item"><a href="/eventos">Eventos</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Detalle </li>
+		</ol>
+	</div>
+
+</section>
+
+<section id="content">
+
+	<div class="content-wrap">
+
+		<div class="container clearfix">
+
+			<div class="postcontent nobottommargin clearfix">
+
+				<div class="single-event">
+
+					<div class="col-sm-12">
+						<div class="entry-image nobottommargin">
+							{% thumbnail object.photo "547x288" crop="center" as im %}
+								<img src="{{ im.url }}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+								{% empty %}
+								<img src="http://via.placeholder.com/547x288" alt="">
+							{% endthumbnail %}
+							
+
+						</div>
+					</div>
+
+					<div class="clear"></div>
+
+					<div class="col-sm-12 top_padding_30 ">
+						<div class="customcards">
+						<div class="entry-c">
+							<div class="entry-title">
+								<h2>{{object}}</h2>
+							</div>
+							<ul class="entry-meta sg_detail">
+								<li>
+									<i class="icon-calendar3 dark_purple"></i> {{object.init_date}}
+								</li>
+								{% if end_date %}
+									<li>
+									<i class="icon-calendar3 dark_purple"></i> {{object.end_date}}
+								</li>
+								{% endif %}
+
+								<li>
+									<i class="icofont-clock-time"></i> {{object.init_hour}} - {{object.end_hour}}
+								</li>
+								
+								<li>
+									<a href="#">
+										<i class="icon-user dark_purple"></i>
+										{{object.author}}
+									</a>
+								</li>
+								
+								
+							</ul>
+						</div>
+
+						<h3 class="top_padding_30">Detalles</h3>
+						<p>{{object.description|safe}}</p>
+						</div>
+
+						<div class="top_padding_30"></div>
+
+							<div id="map"></div>
+							<iframe width="600" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-86.2738698720932%2C12.123853379087619%2C-86.27204596996309%2C12.125411071058227&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=19/12.12463/-86.27296&amp;layers=ND">Ver mapa más grande</a></small>
+					</div>
+
+
+
+					<div class="clear"></div>
+
+				</div>
+
+			</div>
+
+			<div class="sidebar nobottommargin col_last clearfix">
+					<div class="sidebar-widgets-wrap">
+
+						<div class="widget clearfix">
+							<div class="input-group mx-auto" style="">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<i class="icon-search2" style="color:#1ABC9C"></i>
+									</span>
+								</div>
+								<input type="text" id="icons-filter" class="form-control" value="" placeholder="Buscar" style="background-color: #f1f7ff;">
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Blogs Destacados</h4>
+							<div id="post-list-footer">
+								{% for blog in highlight_blogs %}
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+
+										<a href="{% url 'blog_detail' blog.slug %}" class="nobg">
+											{% thumbnail blog.photo "48x48" crop="center" as im%}
+											<img src="{{im.url}}" alt="">
+											{% endthumbnail%}
+										</a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">{{blog}}</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>{{blog.created_on}}</li>
+										</ul>
+									</div>
+								</div>
+								{% endfor %}
+
+							</div>
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Recursos</h4>
+							<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+								{% for res in last_rs %}
+								<div class="oc-item">
+									<div class="iportfolio">
+										<div class="portfolio-image">
+											{% thumbnail res.photo "250x180" crop="center" as im%}
+											<a href="#">
+												
+												<img src="{{im.url}}" alt="">
+											</a>
+											<div class="portfolio-overlay">
+												<a href="{{im.url}}" class="center-icon" data-lightbox="image">
+													<i class="icon-line-plus"></i>
+												</a>
+											</div>
+											{% endthumbnail%}
+										</div>
+										<div class="portfolio-desc center nobottompadding">
+											<h3>
+												<a href="{% url 'resource_detail' res.slug%}">{{res|striptags|truncatechars:30}}</a>
+											</h3>
+											<span>
+												<a href="{% url 'resource_detail' res.slug%}">{{res.thematic}}</a>
+											</span>
+										</div>
+									</div>
+								</div>
+								{% endfor %}								
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4> Video</h4>
+							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+						</div>
+
+					</div>
+				</div>
+
+		</div>
+
+	</div>
+
+</section>
+
 {% endblock content %}
+
+{% block extra_js %}
+<script src="/static/js/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([{{object.position}}], 17);
+mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+L.tileLayer(
+	'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; ' + mapLink + ' Contributors',
+		maxZoom: 18,
+	}).addTo(map);
+var blueIcon = new L.Icon({
+	iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+	shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	shadowSize: [41, 41]
+});
+marker = L.marker([{{object.position}}], {icon: blueIcon}).addTo(map);
+
+</script>
+{% endblock extra_js %}

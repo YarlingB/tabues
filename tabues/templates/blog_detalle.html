@@ -8,13 +8,13 @@
 
 {% block content %}
 	
-<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/blog_bg.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
 
 	<div class="container clearfix">
 		<h1>{{object}}</h1>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-			<li class="breadcrumb-item"><a href="#">Blog</a></li>
+			<li class="breadcrumb-item"><a href="/">Inicio</a></li>
+			<li class="breadcrumb-item"><a href="/blogs">Blog</a></li>
 			<li class="breadcrumb-item active bdcrumlg" aria-current="page">Detalles</li>
 		</ol>
 	</div>
@@ -67,7 +67,7 @@
 							</li>
 							<li>
 								<i class="icon-folder-open"></i> 
-								<a href="#">{{object.thematic}}</a>
+								<a href="">{{object.thematic}}</a>
 							</li>
 							
 						</ul>
@@ -120,7 +120,7 @@
 							</div>
 							<div class="flip-card-back bg-danger no-after">
 								<div class="flip-card-inner">
-									<p class="mb-2 text-white">{{rel_blog.content|safe|striptags|truncatechars:50}}</p>
+									<p class="mb-2 text-white">Categoría: {{rel_blog.thematic|safe|striptags|truncatechars:50}}</p>
 									<a href="{% url 'blog_detail' rel_blog.slug %}" class="btn btn-outline-light mt-2">Ver detalles</a>
 								</div>
 							</div>
@@ -154,12 +154,38 @@
 
 										<div id="comment-c-{{m_comm.id}}" class="comment-wrap clearfix">
 
+											{% if m_comm.is_anonymous %}
+												
 											<div class="comment-meta">
 
 												<div class="comment-author vcard">
 
 													<span class="comment-avatar clearfix">
-													<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-60 photo avatar-default' height='60' width='60' /></span>
+													<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-60 photo avatar-default' height='60' width='60' />
+												</span>
+
+												</div>
+
+											</div>
+
+											<div class="comment-content clearfix">
+
+												<div class="comment-author">Anónimo
+													<span title="Fecha de publicación">
+													{{m_comm.created_on}}
+													
+												</span>
+											</div>
+											
+											{% else %}
+
+											<div class="comment-meta">
+
+												<div class="comment-author vcard">
+
+													<span class="comment-avatar clearfix">
+													<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-60 photo avatar-default' height='60' width='60' />
+												</span>
 
 												</div>
 
@@ -174,6 +200,8 @@
 												</span>
 											</div>
 
+											{% endif %}
+
 												<p>{{m_comm.content|safe}}</p>
 
 												<a title="Responder" class='comment-reply-link fancybox' href="javascript:;" data-type="iframe" data-options='{"iframe" : {"css" : {"height" : "90%", "width":"75%"}}}' data-src="{% url 'add_answer' m_comm.id %}">
@@ -181,6 +209,28 @@
 												</a>
 
 											</div>
+
+											{% if request.user == m_comm.user %}
+											<div class="bg_opt_comment">
+											<span title="Editar">
+												<span title="Editar">
+													<a title="Modificar" class="fancybox" data-fancybox data-type="iframe" data-options='{"iframe" : {"css" : {"height" : "600px"}}}' data-src="{% url 'edit_comment' m_comm.id %}" href="javascript:;">
+														<i class="icofont-edit dark_purple"></i>
+													</a>
+
+												</span>
+											</span>
+											<span title="Eliminar">
+												|
+												<a href="{% url 'delete_comment' m_comm.id %}">
+													<i class="icofont-trash dark_purple"></i>
+												</a>
+
+												
+											</span>
+											</div>
+											{% endif %}
+											
 
 											<div class="clear"></div>
 
@@ -190,8 +240,57 @@
 
 										<ul class='children'>
 											{% for ans in m_comm.answer_set.all  %}
-											
 											<li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-a-{{ans.id}}">
+
+												{% if ans.is_anonymous %}
+													
+												<div id="comment-a-{{ans.id}}" class="comment-wrap clearfix">
+
+													<div class="comment-meta">
+
+														<div class="comment-author vcard">
+
+															<span class="comment-avatar clearfix">
+															<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-40 photo' height='40' width='40'/>
+
+														</div>
+
+													</div>
+
+													<div class="comment-content clearfix">
+
+														<div class="comment-author">
+															<a rel='external nofollow' class='url'>anónimo</a><span>
+																<a href="#" title="Permalink to this comment">{{ans.created_on}}</a>
+															</span>
+														</div>
+
+														<p>{{ans.content|safe}}</p>	
+
+													</div>
+													{% if request.user == ans.user %}
+													
+													<div class="bg_opt_comment">
+														<span title="Editar">
+															<a title="Modificar" class="fancybox" data-fancybox data-type="iframe" data-options='{"iframe" : {"css" : {"height" : "600px"}}}' data-src="{% url 'edit_answer' ans.id %}" href="javascript:;">
+																<i class="icofont-edit dark_purple"></i>
+															</a>
+															
+														</span>| 
+														<span title="Eliminar">
+															 <a href="{% url 'delete_answer' ans.id%}">
+															<i class="icofont-trash dark_purple"></i>
+															</a>
+														</span>
+													</div>
+
+													{% endif %}
+
+													<div class="clear"></div>
+
+												</div>
+
+													{% else %}
 
 												<div id="comment-a-{{ans.id}}" class="comment-wrap clearfix">
 
@@ -200,7 +299,15 @@
 														<div class="comment-author vcard">
 
 															<span class="comment-avatar clearfix">
-															<img alt='' src='http://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' /></span>
+																{% thumbnail ans.user.avatar "40x40" as im%}
+															<img alt='' src='{{im.url}}' class='avatar avatar-40 photo' height='40' width='40' />
+															{%empty%}
+
+													<img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60' class='avatar avatar-40 photo' height='40' width='40'/>
+
+
+															{% endthumbnail%}
+														</span>
 
 														</div>
 
@@ -208,17 +315,34 @@
 
 													<div class="comment-content clearfix">
 
-														<div class="comment-author"><a href='#' rel='external nofollow' class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
+														<div class="comment-author"><a href='#' rel='external nofollow' class='url'>{{ans.user}}</a><span><a href="#" title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
 
-														<p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-														<a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
+														<p>{{ans.content|safe}}</p>
 
 													</div>
+													{% if request.user == ans.user %}
+													
+													<div class="bg_opt_comment">
+														<span title="Editar">
+															<a title="Modificar" class="fancybox" data-fancybox data-type="iframe" data-options='{"iframe" : {"css" : {"height" : "600px"}}}' data-src="{% url 'edit_answer' ans.id %}" href="javascript:;">
+																<i class="icofont-edit dark_purple"></i>
+															</a>
+															
+														</span>| 
+														<span title="Eliminar">
+															 <a href="{% url 'delete_answer' ans.id%}">
+															<i class="icofont-trash dark_purple"></i>
+															</a>
+														</span>
+													</div>
+													
+													{% endif %}
 
 													<div class="clear"></div>
 
 												</div>
+
+												{% endif %}
 
 											</li>
 
@@ -231,12 +355,9 @@
 								{% endfor %}	
 
 									<!-- Comentario -->
-
-									
-
 							</ol>
 
-						</ol><!-- .commentlist end -->
+						</ol>
 
 						<div class="clear"></div>
 
@@ -263,7 +384,7 @@
 								<div class="bottom_padding_20 checkbox">
 									<label for="isanonymous" class="checkbox-style" type="checkbox" checked="">
 										{{form.is_anonymous}}
-										Publicar como usuario anonimo     
+										Publicar como usuario anónimo     
 									</label>
 								</div>
 
@@ -275,6 +396,7 @@
 							</form>
 
 						</div>
+
 							{% else %}
 							<a href="#">Inicia Sesión para agregar un comentario</a>
 						{% endif %}
@@ -292,41 +414,7 @@
 			<div class="sidebar nobottommargin col_last clearfix">
 				<div class="sidebar-widgets-wrap">
 
-					<div class="widget clearfix">
-
-						<div class="tabs nobottommargin clearfix" id="sidebar-tabs">
-
-							<ul class="tab-nav clearfix">
-								<li><a href="#tabs-1">Popular</a></li>
-							</ul>
-
-							<div class="tab-container">
-
-								<div class="tab-content clearfix" id="tabs-1">
-									<div id="popular-post-list-sidebar">
-
-										<div class="spost clearfix">
-											<div class="entry-image">
-												<a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt=""></a>
-											</div>
-											<div class="entry-c">
-												<div class="entry-title">
-													<h4><a href="#">titulo blog</a></h4>
-												</div>
-												<ul class="entry-meta">
-													<li><i class="icon-comments-alt"></i> 35 Comentarios</li>
-												</ul>
-											</div>
-										</div>
-
-									</div>
-								</div>								
-
-							</div>
-
-						</div>
-
-					</div>
+					
 
 					<div class="widget clearfix">
 
@@ -401,7 +489,7 @@
 <script>
 $('.fancybox').fancybox({ 
 	afterShow: function(){     
-		$('.fancybox-iframe').contents().find('input').click(function(){
+		$('.fancybox-iframe').contents().find('button').click(function(){
 			window.parent.location.reload();
 			window.parent.$.fancybox.close();
 		}); 

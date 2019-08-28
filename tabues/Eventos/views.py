@@ -12,4 +12,6 @@ def events(request,template='eventos.html'):
 
 def event_detail(request,slug,template='evento_detalle.html'):
 	object = Event.objects.get(slug=slug)
+	highlight_blogs = Blog.objects.order_by('-id')[:3]
+	last_rs = Educational_Resource.objects.order_by('-id')[:3]
 	return render(request,template,locals())

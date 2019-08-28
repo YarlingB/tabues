@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/recursos_bg.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+	<div class="container clearfix">
+		<h1>{{object}}</h1>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/">Inicio</a></li>
+			<li class="breadcrumb-item"><a href="/recursos-educativos/aprende">Aprende</a></li>
+			<li class="breadcrumb-item active bdcrumlg" aria-current="page">detalles</li>
+		</ol>
+	</div>
+
+</section>
+
+<section id="content">
+
+	<div class="content-wrap">
+
+		<div class="container clearfix ">
+
+			<!-- Post Content -->
+			<div class="postcontent nobottommargin clearfix customcards">
+					<div class="top_padding_30"></div>
+				<div class="card top">
+					<div class="card-header" style="color=purple;">
+						Es el embarazo adolescente un problema sociocultural?
+					</div>
+					<div class="card-body">
+						<div>
+							<input id="radio-10" class="radio-style" name="radio-group-3" type="radio" checked>
+							<label for="radio-10" class="radio-style-3-label">Si</label>
+						</div>
+						<div>
+							<input id="radio-11" class="radio-style"name="radio-group-3" type="radio">
+							<label for="radio-11" class="radio-style-3-label">No</label>
+						</div>
+					</div>
+					<div class="card-footer">
+						<a href="" class="text-right"><i class="icofont-bug"></i>Reportar </a>
+					</div>
+				</div>
+
+				<div class="w-100 line"></div>
+
+				<div class="card">
+					<div class="card-header">Cuales de los siguientes problemas plantea el embarazo en la adolescencia ?</div>
+					<div class="card-body">
+						<div>
+							<input id="checkbox-7" class="checkbox-style" name="checkbox-7" type="checkbox" checked>
+							<label for="checkbox-7" class="checkbox-style-2-label">Mortalidad y nutrición
+							infantil</label>
+						</div>
+						<div>
+							<input id="checkbox-8" class="checkbox-style" name="checkbox-8" type="checkbox">
+							<label for="checkbox-8" class="checkbox-style-2-label">Abandono de actividades educativas y laborales</label>
+						</div>
+						<div>
+							<input id="checkbox-9" class="checkbox-style" name="checkbox-9" type="checkbox">
+							<label for="checkbox-9" class="checkbox-style-2-label">Transmisión intergeneracional de la pobreza</label>
+						</div>
+					</div>
+					<div class="card-footer">
+						<a href="" class="text-right"><i class="icofont-bug"></i>Reportar </a>
+					</div>
+				</div>
+				<div class="w-100 line"></div>
+
+				<div class="card">
+					<div class="card-header" style="color=purple;">
+						Mito o realidad: Si es tu primera vez NO PUEDES EMBARAZARTE?
+					</div>
+					<div class="card-body">
+						<div>
+							<input id="radio-10" class="radio-style" name="radio-group-3" type="radio" checked>
+							<label for="radio-10" class="radio-style-3-label">Si</label>
+						</div>
+						<div>
+							<input id="radio-11" class="radio-style"name="radio-group-3" type="radio">
+							<label for="radio-11" class="radio-style-3-label">No</label>
+						</div>
+					</div>
+					<div class="card-footer">
+						<a href="" class="text-right"><i class="icofont-bug"></i>Reportar </a>
+					</div>
+				</div>
+
+				<div class="top_padding_30"></div>
+
+				<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="btn btn-danger nomargin" value="submit">Responder</button>
+
+
+
+			</div>
+
+			<!-- sidebar -->
+			<div class="sidebar nobottommargin col_last clearfix">
+				<div class="sidebar-widgets-wrap">
+
+					<div class="widget clearfix">
+
+						<h4>Blogs recientes</h4>
+						<div id="post-list-sidebar">
+
+							{% for blog in latest_blogs %}
+									
+									<div class="spost clearfix">
+										<div class="entry-image">
+											<a href="" class="nobg">
+												{% thumbnail blog.photo "48x48" crop="center" as im %}
+												<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+
+												{%empty%}
+												<img src="http://via.placeholder.com/48x48" alt="">
+
+												{% endthumbnail%}
+
+												<img src="images/magazine/small/1.jpg" alt="">
+											</a>
+											
+										</div>
+										<div class="entry-c">
+											<div class="entry-title">
+												<h4><a href="">{{blog}}</a></h4>
+											</div>
+											<ul class="entry-meta">
+												<li>{{blog.created_on|date:"d F y"}}</li>
+											</ul>
+										</div>
+									</div>
+
+									{% endfor %}
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- end sidebar -->
+		</div>
+	</div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load el_pagination_tags %}
+{% load thumbnail %}
+
+{% block content %}
+	<section id="page-title" class="page-title-parallax page-title-dark" style="background-image: url('/static/img/7.jpg'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+
+		<div class="container clearfix">
+			<h1>Aprende</h1>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">Inicio</a></li>
+				<li class="breadcrumb-item active bdcrumlg" aria-current="page">Aprende</li>
+			</ol>
+		</div>
+
+	</section>
+
+	<section id="content">
+
+		<div class="content-wrap">
+
+			<div class="container clearfix">
+
+				<!-- Post Content -->
+				<div class="postcontent nobottommargin">
+
+					<!-- Portfolio Filter -->
+					<ul id="portfolio-filter" class="portfolio-filter clearfix" data-container="#portfolio">
+
+						<li class="activeFilter"><a href="#" data-filter="*">Todos</a></li>
+						<li><a href="#" data-filter=".pf-icons">ETS</a></li>
+						<li><a href="#" data-filter=".pf-illustrations">Embarazo Prematuro</a></li>
+
+					</ul><!-- #portfolio-filter end -->
+
+					<div id="portfolio-shuffle" class="portfolio-shuffle" data-container="#portfolio">
+						<i class="icon-random"></i>
+					</div>
+
+					<div class="clear"></div>
+
+					<!-- Portfolio Items -->
+					<div id="portfolio" class="portfolio portfolio-1 grid-container clearfix">
+						{% paginate 4 learn_list %}
+
+						{% for res in learn_list %}
+
+						<article class="customcards portfolio-item pf-media pf-icons clearfix">
+							<div class="portfolio-image">
+								<a href="">
+									{% thumbnail res.photo "458x304" crop="center" as im %}
+									<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w">
+									{% endthumbnail%}
+
+								</a>
+								<div class="portfolio-overlay">
+									<a href="{{res.photo.url}}" class="left-icon" data-lightbox="image">
+										<i class="icon-line-plus"></i>
+									</a>
+									<a href="{% url 'resource_detail' res.slug%}" class="right-icon">
+										<i class="icon-line-ellipsis"></i>
+									</a>
+								</div>
+							</div>
+							<div class="portfolio-desc">
+								<h3>
+									<a href="{% url 'learn_detail' res.slug %}" style="max-height:26px;overflow:hidden">{{res|safe|striptags|truncatechars:28}}</a>
+								</h3>
+								<span>
+									<a href="#">{{res.get_info_type_display}}</a></span>
+									<p>{{res.content|safe|striptags|truncatechars:110}}</p>
+									<ul class="iconlist">
+										
+										<li>
+											<i class="icon-file-medical-alt dark_purple"></i> 
+											{{res.thematic}}
+										</li>
+										<li>
+											<i class="icon-user-edit dark_purple"></i> 
+											{{res.author}}
+										</li>
+
+										<li>
+											<i class="icon-calendar2 dark_purple"></i>
+											<strong>Fecha:</strong> {{res.created_on|date:"SHORT_DATE_FORMAT"}}
+										</li>
+									</ul>
+									<a href="{% url 'learn_detail' res.slug %}" class="button button-3d noleftmargin">Ver más</a>
+
+								</div>
+							</article>
+
+							{% endfor %}
+
+						</div><!-- #portfolio end -->
+
+
+						<ul class="boxed-slider pagination pagination-circle pagination-lg justify-content-center top_padding_30">
+
+							{% get_pages %}
+							{% if pages.paginated %}
+
+							<li class="page-item">
+								<a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous"> <span aria-hidden="true">«</span></a>
+							</li>
+
+							{% for page in pages %}
+								{% if page.current %}
+
+							<li class="page-item {% if page.is_current %} active {% endif %}">
+								<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+							</li>
+							{% else %}
+							<li class="page-item {% if page.is_current %} active {% endif %}">
+								<a class="page-link" href="./{{ page.url }}">{{ page.number }}</a>
+							</li>
+
+							{% endif %}
+
+							{% endfor %}
+							<li class="page-item">
+								<a class="page-link" href="{{ pages.next.path }}" aria-label="Next"><span aria-hidden="true">»</span>
+								</a>
+							</li>
+							{% endif %}
+
+						</ul>
+
+					</div><!-- .postcontent end -->
+
+					<!-- Sidebar -->
+					<div class="sidebar nobottommargin col_last">
+						<div class="sidebar-widgets-wrap">
+
+							<div class="widget clearfix">
+								<div class="input-group mx-auto" style="">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="icon-search2" style="color:#1ABC9C"></i>
+										</span>
+									</div>
+									<input type="text" id="icons-filter" class="form-control" value="" placeholder="Buscar" style="background-color: #f1f7ff;">
+								</div>
+								
+							</div>
+
+							
+
+							<div class="widget clearfix">
+
+								<h4>Blogs Recientes</h4>
+								<div id="post-list-footer">
+
+									{% for blog in latest_blogs %}
+									
+									<div class="spost clearfix">
+										<div class="entry-image">
+											<a href="" class="nobg">
+												{% thumbnail blog.photo "48x48" crop="center" as im %}
+												<img src="{{im.url}}" srcset="{{ im.url }} {{ im.x }}w" alt="">
+
+												{%empty%}
+												<img src="http://via.placeholder.com/48x48" alt="">
+
+												{% endthumbnail%}
+
+												<img src="images/magazine/small/1.jpg" alt="">
+											</a>
+											
+										</div>
+										<div class="entry-c">
+											<div class="entry-title">
+												<h4><a href="">{{blog}}</a></h4>
+											</div>
+											<ul class="entry-meta">
+												<li>{{blog.created_on|date:"d F y"}}</li>
+											</ul>
+										</div>
+									</div>
+
+									{% endfor %}
+								</div>
+
+							</div>
+
+							<div class="widget clearfix">
+								<h4 class="highlight-me">Tags</h4>
+								<div class="tagcloud">
+									<a href="#">general</a>
+									<a href="#">videos</a>
+									<a href="#">salud</a>
+									<a href="#">sexualidad</a>
+									<a href="#">Embarazo adolescente</a>
+									<a href="#">ITS</a>
+									<a href="#">Anticonceptivos</a>
+									<a href="#">Mitos</a>
+								</div>
+							</div>
+
+							
+
+						</div>
+					</div><!-- .sidebar end -->
+
+
+
+				</div>
+
+			</div>
+
+		</section>
+{% endblock content %}

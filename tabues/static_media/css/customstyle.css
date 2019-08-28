@@ -1,6 +1,7 @@
 .top_padding_30{
 	padding-top: 30px !important;
 }
+
 .customcards{
 	background-color: white;
 	padding: 15px;
@@ -13,6 +14,16 @@
     border-radius: 5px;
 }
 
+.bg_opt_comment{
+	background: linear-gradient(45deg,#ade6de14, #ffffff00);
+	border-radius: 5px;
+	padding: 10px;
+}
+
 .dark_purple{
 	color: #1f1142 !important;
+}
+
+.black_color{
+	color: black !important;
 }

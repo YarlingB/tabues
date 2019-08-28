@@ -10,5 +10,16 @@ def resources(request,template='recursos.html'):
 	return render(request,template,locals())
 
 def resource_detail(request,slug,template='recursos_detalle.html'):
-	# object = Educational_Resource.objects.get(slug=slug)
+	object = Educational_Resource.objects.get(slug=slug)
+	return render(request,template,locals())
+
+def learn(request,template='aprende.html'):
+	latest_blogs = Blog.objects.order_by('-created_on')[:3]
+	learn_list = Learning.objects.order_by('-id')
+	return render(request,template,locals())
+
+def learn_detail(request,slug,template='aprende_detalle.html'):
+	latest_blogs = Blog.objects.order_by('-created_on')[:3]
+	object = Learning.objects.get(slug=slug)
+	
 	return render(request,template,locals())

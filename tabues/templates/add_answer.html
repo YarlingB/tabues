@@ -4,8 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="author" content="TabuES" />
 
-	<!-- Stylesheets
-	============================================= -->
+	<!-- Stylesheets-->
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css" />
@@ -23,9 +22,17 @@
 	<body>
 		<div class="top_padding_30 block dark divcenter" style="background: url('/static/img/blog/bg-answer.jpg');">
 		<div class="container" style="padding-top:30px">
+			<h4 class="black_color">Respondiendo a <span>
+				{% if object.is_anonymous %}
+				 usuario anónimo
+				{% else %} {{object.user}}
+			{% endif %}
+			</span>
+			</h4>
+
+
 			<div class="customcards">
-				<h4>Respondiendo a {{object.user}}</h4>
-			<form class="clearfix" action="." method="POST" id="commentform" enctype="multipart/form-data">{% csrf_token %}
+			<form class="clearfix" action="." method="POST" enctype="multipart/form-data">{% csrf_token %}
 
 				{{form.media}}
 				{{form.errors}}
